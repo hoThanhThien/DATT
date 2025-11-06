@@ -1,0 +1,227 @@
+# Xóa dòng 'version' đi, nó không cần thiết nữa
+services:
+
+  # ----- 1. HẠ TẦNG: DATABASE & BROKER -----
+
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=telemedicine_main_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - telemedicine-net
+    # ----- THÊM HEALTHCHECK CHO POSTGRES -----
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  mongo-db:
+    image: mongo:latest
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - telemedicine-net
+    # ----- THÊM HEALTHCHECK CHO MONGO -----
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - telemedicine-net
+    # ----- THÊM HEALTHCHECK CHO RABBITMQ -----
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ----- 2. CÁC MICROSERVICE BE -----
+
+  user-service:
+    build:
+      context: ./BE/user-service/user-service
+    volumes: # THÊM CACHE
+      - C:/Users/DELL/.m2:/root/.m2
+    container_name: user-service
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/telemedicine_main_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on: # SỬA LẠI
+      postgres-db:
+        condition: service_healthy
+    networks:
+      - telemedicine-net
+
+  auth-service:
+    build:
+      context: ./BE/auth-service/auth-service
+    volumes: # THÊM CACHE
+      - C:/Users/DELL/.m2:/root/.m2
+    container_name: auth-service
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/telemedicine_main_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on: # SỬA LẠI
+      postgres-db:
+        condition: service_healthy
+    networks:
+      - telemedicine-net
+
+  appointment-service:
+    build:
+      context: ./BE/appointment-service/appointment-service
+    volumes: # THÊM CACHE
+      - C:/Users/DELL/.m2:/root/.m2
+    container_name: appointment-service
+    ports:
+      - "8083:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/telemedicine_main_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    depends_on: # SỬA LẠI
+      postgres-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy # Chờ Rabbit "khỏe"
+    networks:
+      - telemedicine-net
+
+  payment-service:
+    build:
+      context: ./BE/payment-service/payment-service
+    volumes: # THÊM CACHE
+      - C:/Users/DELL/.m2:/root/.m2
+    container_name: payment-service
+    ports:
+      - "8084:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/telemedicine_main_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    depends_on: # SỬA LẠI
+      postgres-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - telemedicine-net
+
+  chat-service:
+    build:
+      context: ./BE/chat-service/chat-service
+    volumes: # THÊM CACHE
+      - C:/Users/DELL/.m2:/root/.m2
+    container_name: chat-service
+    ports:
+      - "8085:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo-db:27017/chat_db
+    depends_on: # SỬA LẠI
+      mongo-db:
+        condition: service_healthy
+    networks:
+      - telemedicine-net
+
+  medical-record-service:
+    build:
+      context: ./BE/medical-record-service/medical-record-service
+    volumes: # THÊM CACHE
+      - C:/Users/DELL/.m2:/root/.m2
+    container_name: medical-record-service
+    ports:
+      - "8086:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo-db:27017/medical_db
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    depends_on: # SỬA LẠI
+      mongo-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - telemedicine-net
+
+  video-service: # File này của bạn đã đúng, giữ nguyên
+    build:
+      context: ./BE/video-service/video-service
+    volumes:
+      - C:/Users/DELL/.m2:/root/.m2
+    container_name: video-service
+    ports:
+      - "8087:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo-db:27017/video_db
+    depends_on:
+      mongo-db:
+        condition: service_healthy
+    networks:
+      - telemedicine-net
+
+  api-gateway: # File này của bạn đã đúng, giữ nguyên
+    build:
+      context: ./BE/api-gateway/api-gateway
+    volumes:
+      - C:/Users/DELL/.m2:/root/.m2
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_AUTOCONFIGURE_EXCLUDE=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+    depends_on: # Sửa lại, chỉ cần chờ service "started" (khởi động) là đủ
+      user-service:
+        condition: service_started
+      auth-service:
+        condition: service_started
+      appointment-service:
+        condition: service_started
+      payment-service:
+        condition: service_started
+      chat-service:
+        condition: service_started
+      medical-record-service:
+        condition: service_started
+      video-service:
+        condition: service_started
+    networks:
+      - telemedicine-net
+
+volumes:
+  postgres-data:
+  mongo-data:
+
+networks:
+  telemedicine-net:
+    driver: bridge

@@ -5,78 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a75305c-c04a-43e6-8fbd-b08125bf2fdb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/api-gateway/api-gateway/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/api-gateway/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/api-gateway/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/api-gateway/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/api-gateway/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/api-gateway/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/api-gateway/src/main/java/com/datt/apigateway/ApiGatewayApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/api-gateway/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api-gateway/api-gateway/src/test/java/com/datt/apigateway/ApiGatewayApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appointment-service/appointment-service/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appointment-service/appointment-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appointment-service/appointment-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appointment-service/appointment-service/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appointment-service/appointment-service/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appointment-service/appointment-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appointment-service/appointment-service/src/main/java/com/datt/appointmentservice/AppointmentServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appointment-service/appointment-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/appointment-service/appointment-service/src/test/java/com/datt/appointmentservice/AppointmentServiceApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/auth-service/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/auth-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/auth-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/auth-service/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/auth-service/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/auth-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/auth-service/src/main/java/com/datt/authservice/AuthServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/auth-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/auth-service/src/test/java/com/datt/authservice/AuthServiceApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat-service/chat-service/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat-service/chat-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat-service/chat-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat-service/chat-service/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat-service/chat-service/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat-service/chat-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat-service/chat-service/src/main/java/com/datt/chatservice/ChatServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat-service/chat-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat-service/chat-service/src/test/java/com/datt/chatservice/ChatServiceApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/medical-record-service/medical-record-service/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/medical-record-service/medical-record-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/medical-record-service/medical-record-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/medical-record-service/medical-record-service/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/medical-record-service/medical-record-service/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/medical-record-service/medical-record-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/medical-record-service/medical-record-service/src/main/java/com/datt/medicalrecordservice/MedicalRecordServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/medical-record-service/medical-record-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/medical-record-service/medical-record-service/src/test/java/com/datt/medicalrecordservice/MedicalRecordServiceApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-service/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-service/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-service/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-service/src/main/java/com/datt/paymentservice/PaymentServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/payment-service/payment-service/src/test/java/com/datt/paymentservice/PaymentServiceApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/user-service/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/user-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/user-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/user-service/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/user-service/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/user-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/user-service/src/main/java/com/datt/userservice/UserServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/user-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/user-service/src/test/java/com/datt/userservice/UserServiceApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/video-service/video-service/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/video-service/video-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/video-service/video-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/video-service/video-service/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/video-service/video-service/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/video-service/video-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/video-service/video-service/src/main/java/com/datt/videoservice/VideoServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/video-service/video-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/video-service/video-service/src/test/java/com/datt/videoservice/VideoServiceApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/api-gateway.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-gateway/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +25,7 @@
     <execution />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/appointment-service/appointment-service" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -101,6 +39,10 @@
     &quot;accountId&quot;: &quot;6cf60191-fdd9-472a-9090-0a5a3674c05a&quot;
   }
 }</component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="$PROJECT_DIR$/../../../xampp/php/php.exe" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -113,14 +55,15 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Docker.api-gateway/Dockerfile.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/aworkspace/DATT/BE",
+    "last_opened_file_path": "C:/aworkspace/DATT/BE/api-gateway",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -129,6 +72,22 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\aworkspace\DATT\BE\api-gateway" />
+      <recent name="C:\aworkspace\DATT\BE\appointment-service" />
+      <recent name="C:\aworkspace\DATT\BE\auth-service" />
+      <recent name="C:\aworkspace\DATT\BE\chat-service" />
+      <recent name="C:\aworkspace\DATT\BE\medical-record-service" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\aworkspace\DATT\BE\video-service\video-service" />
+      <recent name="C:\aworkspace\DATT\BE\user-service\user-service" />
+      <recent name="C:\aworkspace\DATT\BE\payment-service\payment-service" />
+      <recent name="C:\aworkspace\DATT\BE\medical-record-service\medical-record-service" />
+      <recent name="C:\aworkspace\DATT\BE\chat-service\chat-service" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="BE" />
@@ -191,6 +150,23 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <method v="2" />
     </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile" />
+      <method v="2" />
+    </configuration>
+    <configuration name="api-gateway/Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="api-gateway/api-gateway/Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.api-gateway/Dockerfile" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -211,6 +187,8 @@
       <workItem from="1762305216762" duration="1914000" />
       <workItem from="1762331770532" duration="3116000" />
       <workItem from="1762336123991" duration="3428000" />
+      <workItem from="1762356727280" duration="104000" />
+      <workItem from="1762357996895" duration="4148000" />
     </task>
     <servers />
   </component>
