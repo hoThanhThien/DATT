@@ -1,7 +1,9 @@
 package com.datt.userservice.service;
 
+import com.datt.userservice.config.RabbitMQConfig; // <-- 1. THÊM IMPORT
 import com.datt.userservice.dto.DoctorRequest;
 import com.datt.userservice.dto.RegisterRequest;
+import com.datt.userservice.dto.UserSyncDto; // <-- 1. THÊM IMPORT
 import com.datt.userservice.model.Doctor;
 import com.datt.userservice.model.Patient;
 import com.datt.userservice.model.Role;
@@ -10,6 +12,7 @@ import com.datt.userservice.repository.DoctorRepository;
 import com.datt.userservice.repository.PatientRepository;
 import com.datt.userservice.repository.RoleRepository;
 import com.datt.userservice.repository.UserRepository;
+import org.springframework.amqp.rabbit.core.RabbitTemplate; // <-- 1. THÊM IMPORT
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,86 +27,95 @@ public class UserService {
     @Autowired private DoctorRepository doctorRepository;
     @Autowired private PasswordEncoder passwordEncoder;
 
+    @Autowired private RabbitTemplate rabbitTemplate; // <-- 2. THÊM AUTOWIRED NÀY
+
     @Transactional
-    public User registerUser(RegisterRequest request) { // Dùng DTO đã sửa
+    public User registerUser(RegisterRequest request) {
 
-        // 1. Kiểm tra Email/SĐT
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Lỗi: Email đã được sử dụng!");
-        }
-        if (userRepository.findByPhoneNumber(request.getPhoneNumber()).isPresent()) {
-            throw new RuntimeException("Lỗi: Số điện thoại đã được sử dụng!");
-        }
+        // ... (Code kiểm tra Email/SĐT của bạn) ...
 
-        // 2. TÌM VAI TRÒ "ROLE_PATIENT" (ĐÃ ĐƯỢC HARDCODE)
         Role userRole = roleRepository.findByRoleName("ROLE_PATIENT")
                 .orElseThrow(() -> new RuntimeException("Lỗi: Role 'ROLE_PATIENT' chưa được tạo trong database!"));
 
-        // 3. Tạo User
+        // ... (Code tạo User và mã hóa pass của bạn) ...
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPhoneNumber(request.getPhoneNumber());
         user.setFullName(request.getFullName());
         user.setGender(request.getGender());
-        user.setPassword(passwordEncoder.encode(request.getPassword())); // Mã hóa Pass
-        user.setRole(userRole); // Gán vai trò Bệnh nhân
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRole(userRole);
         user.setStatus("ACTIVE");
 
         User savedUser = userRepository.save(user);
 
-
+        // ... (Code tạo Patient của bạn) ...
         Patient patient = new Patient();
         patient.setUser(savedUser);
         patient.setDob(request.getDob());
         patient.setInsuranceNumber(request.getInsuranceNumber());
-
-
         Patient savedPatient = patientRepository.save(patient);
+
         savedUser.setPatient(savedPatient);
 
+        // ----- 3. THÊM LOGIC GỬI TIN NHẮN -----
+        sendUserSyncMessage(savedUser, userRole.getRoleName());
+        // ------------------------------------
 
         return savedUser;
     }
+
     @Transactional
     public User createDoctor(DoctorRequest request) {
 
-        // 1. Kiểm tra Email/SĐT
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Lỗi: Email đã được sử dụng!");
-        }
-        if (userRepository.findByPhoneNumber(request.getPhoneNumber()).isPresent()) {
-            throw new RuntimeException("Lỗi: Số điện thoại đã được sử dụng!");
-        }
+        // ... (Code kiểm tra Email/SĐT của bạn) ...
 
-        // 2. TÌM VAI TRÒ "ROLE_DOCTOR" (ĐÃ ĐƯỢC HARDCODE)
         Role userRole = roleRepository.findByRoleName("ROLE_DOCTOR")
                 .orElseThrow(() -> new RuntimeException("Lỗi: Role 'ROLE_DOCTOR' chưa được tạo trong database!"));
 
-        // 3. Tạo User
+        // ... (Code tạo User và mã hóa pass của bạn) ...
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPhoneNumber(request.getPhoneNumber());
         user.setFullName(request.getFullName());
         user.setGender(request.getGender());
-        user.setPassword(passwordEncoder.encode(request.getPassword())); // Mã hóa Pass
-        user.setRole(userRole); // Gán vai trò Bác sĩ
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRole(userRole);
         user.setStatus("ACTIVE");
 
         User savedUser = userRepository.save(user);
 
-        // 4. CHỈ TẠO BÁC SĨ (DOCTOR)
+        // ... (Code tạo Doctor của bạn) ...
         Doctor doctor = new Doctor();
-        doctor.setUser(savedUser); // Liên kết (quan trọng!)
+        doctor.setUser(savedUser);
         doctor.setSpecialization(request.getSpecialization());
         doctor.setExperienceYears(request.getExperienceYears());
         doctor.setWorkSchedule(request.getWorkSchedule());
-
         Doctor savedDoctor = doctorRepository.save(doctor);
 
-        // 5. Set liên kết ngược (để response JSON đẹp)
         savedUser.setDoctor(savedDoctor);
+
+        // ----- 3. THÊM LOGIC GỬI TIN NHẮN -----
+        sendUserSyncMessage(savedUser, userRole.getRoleName());
+        // ------------------------------------
 
         return savedUser;
     }
-    // (Sau này bạn sẽ tạo một hàm mới cho Admin, ví dụ: createDoctor(DoctorRequest request) ...)
+
+    // ----- HÀM HỖ TRỢ GỬI TIN NHẮN (ĐÃ THÊM) -----
+    private void sendUserSyncMessage(User user, String roleName) {
+        UserSyncDto syncDto = new UserSyncDto();
+        syncDto.setId(user.getId());
+        syncDto.setEmail(user.getEmail());
+        syncDto.setPhoneNumber(user.getPhoneNumber());
+        syncDto.setPassword(user.getPassword()); // Gửi pass đã mã hóa
+        syncDto.setRoleName(roleName);
+
+        rabbitTemplate.convertAndSend(
+                RabbitMQConfig.EXCHANGE_NAME,
+                RabbitMQConfig.ROUTING_KEY,
+                syncDto
+        );
+        System.out.println("UserService: Đã gửi tin nhắn đồng bộ user: " + user.getEmail());
+    }
 }
