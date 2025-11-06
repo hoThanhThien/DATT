@@ -9,6 +9,7 @@ import AdminLayout from './layouts/AdminLayout'
 // Public Pages
 import HomePage from './pages/public/HomePage'
 import LoginPage from './pages/public/LoginPage'
+import RegisterPage from './pages/public/RegisterPage'
 
 // Patient Pages
 import PatientDashboardPage from './pages/patient/PatientDashboardPage'
@@ -29,7 +30,8 @@ function App() {
             <Route path="/" element={<PublicLayout />}>
                 <Route index element={<HomePage />} />
                 <Route path="login" element={<LoginPage />} />
-                {/* Thêm các trang public khác ở đây (register, doctors...) */}
+                <Route path="register" element={<RegisterPage />} />
+                {/* Thêm các trang public khác ở đây (doctors...) */}
             </Route>
 
             {/* ---------------- PATIENT ROUTES (Được bảo vệ) ---------------- */}

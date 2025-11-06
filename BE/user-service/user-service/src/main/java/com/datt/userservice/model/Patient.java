@@ -1,5 +1,6 @@
 package com.datt.userservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,5 +25,6 @@ public class Patient {
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId // 2. Báo cho JPA: "Hãy dùng ID của 'user' làm ID cho tôi"
     @JoinColumn(name = "user_id") // 3. Tên cột khóa ngoại
+    @JsonIgnore
     private User user;
 }

@@ -32,7 +32,7 @@ public class SecurityConfig {
                         //  CHO PHÉP (permitAll) tất cả request đến "/api/v1/users/register"
                         .requestMatchers("/api/v1/users/register").permitAll()
 
-
+                        .requestMatchers("/api/v1/users/admin/**").hasRole("ADMIN")
 
                         //  BẮT BUỘC (authenticated) tất cả các request CÒN LẠI
                         .anyRequest().authenticated()
@@ -40,4 +40,6 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+
 }

@@ -72,16 +72,15 @@ const HomePage = () => {
 				<div className="hero-content">
 					<span className="hero-label">Nền tảng Telemedicine thế hệ mới</span>
 					<h1>
-						Kết nối bệnh nhân, bác sĩ và bệnh viện <span>mọi lúc - mọi nơi</span>
+						<span className="hero-highlight">Kết nối bệnh nhân, bác sĩ và bệnh viện</span>
+						<br />
+						<span className="hero-sub">Mọi lúc - mọi nơi</span>
 					</h1>
-
-					{/* Search bar like Medpro */}
 					<div className="hero-search">
 						<input type="search" placeholder="Tìm kiếm bác sĩ, bệnh viện, chuyên khoa..." />
 					</div>
-					<p>
-						Từ đặt lịch, khám video, đến theo dõi bệnh án và thanh toán, tất cả hợp nhất trên một hệ
-						thống duy nhất tích hợp chuẩn y tế của MedPro.
+					<p className="hero-desc">
+						Đặt lịch, khám video, quản lý bệnh án và thanh toán online – tất cả trên một nền tảng duy nhất chuẩn y tế.
 					</p>
 					<div className="hero-actions">
 						<Link to="/login" className="btn primary">
@@ -96,19 +95,20 @@ const HomePage = () => {
 			</section>
 
 			<section className="feature-grid">
-							{featureCards.map((feature) => (
-								<Card key={feature.title} title={feature.title} icon={feature.icon}>
-									<p>{feature.description}</p>
-								</Card>
-							))}
+				{featureCards.map((feature) => (
+					<div className="feature-card" key={feature.title}>
+						<div className="feature-icon">{feature.icon}</div>
+						<h3>{feature.title}</h3>
+						<p>{feature.description}</p>
+					</div>
+				))}
 			</section>
 
 			<section className="workflow">
 				<div className="workflow-header">
 					<h2>Quy trình kết nối chăm sóc toàn diện</h2>
 					<p>
-						Liên kết các mô-đun Lịch khám, Hồ sơ bệnh án, Phiên video và Thanh toán như sơ đồ dữ liệu
-						bạn đã gửi.
+						Liên kết các mô-đun Lịch khám, Hồ sơ bệnh án, Phiên video và Thanh toán như sơ đồ dữ liệu bạn đã gửi.
 					</p>
 				</div>
 				<div className="workflow-steps">
@@ -122,26 +122,21 @@ const HomePage = () => {
 				</div>
 			</section>
 
-			<Footer />
-
 			<section className="testimonials">
-				<div className="testimonials-header">
-					<h2>Hơn 200.000 người dùng đang tin tưởng</h2>
-					<p>Giải pháp giúp bệnh nhân yên tâm điều trị và bác sĩ quản lý hồ sơ hiệu quả.</p>
-				</div>
-				<div className="testimonial-list">
-					{testimonials.map((testimonial) => (
-						<blockquote key={testimonial.name}>
-							<p>“{testimonial.quote}”</p>
-							<footer>
-								<strong>{testimonial.name}</strong>
-								<span>{testimonial.role}</span>
-							</footer>
-						</blockquote>
+				<h2 className="testimonials-title">Cảm nhận từ người dùng</h2>
+				<div className="testimonials-list">
+					{testimonials.map((t) => (
+						<div className="testimonial-card" key={t.name}>
+							<div className="testimonial-quote">“{t.quote}”</div>
+							<div className="testimonial-user">
+								<strong>{t.name}</strong> <span>- {t.role}</span>
+							</div>
+						</div>
 					))}
 				</div>
 			</section>
 
+			{/* CTA Section */}
 			<section className="cta-section">
 				<div className="cta-card">
 					<h2>Bắt đầu trải nghiệm Telemedicine chuẩn MedPro</h2>
@@ -160,6 +155,8 @@ const HomePage = () => {
 					{/* TODO: Thêm liên kết tải app mobile khi có */}
 				</div>
 			</section>
+
+			<Footer />
 		</div>
 	);
 };

@@ -35,38 +35,43 @@ const RegisterPage = () => {
         <div className="register-card">
           <div className="register-header">
             <h1>Đăng ký tài khoản</h1>
-            <p>Vui lòng điền đầy đủ thông tin bên dưới để tạo tài khoản mới.</p>
+            <p className="register-desc">Tạo tài khoản để đặt lịch khám online, quản lý hồ sơ sức khỏe và nhận hỗ trợ tốt nhất từ hệ thống.</p>
           </div>
           <form className="register-form" onSubmit={handleSubmit}>
             {error && <div className="error-message">{error}</div>}
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input type="email" id="email" name="email" value={form.email} onChange={handleChange} required />
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input type="email" id="email" name="email" value={form.email} onChange={handleChange} required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="phoneNumber">Số điện thoại</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" value={form.phoneNumber} onChange={handleChange} required />
+              </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="phoneNumber">Số điện thoại</label>
-              <input type="text" id="phoneNumber" name="phoneNumber" value={form.phoneNumber} onChange={handleChange} required />
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="password">Mật khẩu</label>
+                <input type="password" id="password" name="password" value={form.password} onChange={handleChange} required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="fullName">Họ và tên</label>
+                <input type="text" id="fullName" name="fullName" value={form.fullName} onChange={handleChange} required />
+              </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="password">Mật khẩu</label>
-              <input type="password" id="password" name="password" value={form.password} onChange={handleChange} required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="fullName">Họ và tên</label>
-              <input type="text" id="fullName" name="fullName" value={form.fullName} onChange={handleChange} required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="gender">Giới tính</label>
-              <select id="gender" name="gender" value={form.gender} onChange={handleChange} required>
-                <option value="">Chọn giới tính</option>
-                <option value="female">Nữ</option>
-                <option value="male">Nam</option>
-                <option value="other">Khác</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="dob">Ngày sinh</label>
-              <input type="date" id="dob" name="dob" value={form.dob} onChange={handleChange} required />
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="gender">Giới tính</label>
+                <select id="gender" name="gender" value={form.gender} onChange={handleChange} required>
+                  <option value="">Chọn giới tính</option>
+                  <option value="female">Nữ</option>
+                  <option value="male">Nam</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="dob">Ngày sinh</label>
+                <input type="date" id="dob" name="dob" value={form.dob} onChange={handleChange} required />
+              </div>
             </div>
             <div className="form-group">
               <label htmlFor="insuranceNumber">Số thẻ BHYT</label>

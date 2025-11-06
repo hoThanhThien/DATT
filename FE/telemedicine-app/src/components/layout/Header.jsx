@@ -1,83 +1,111 @@
-import { useAuth } from '../../context/AuthContext';
-import { useState } from 'react';
 import './Header.css';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
-  const { user, isAuthenticated, logout } = useAuth();
-  const [open, setOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  // Replace with real auth logic
+  const isAuthenticated = false;
+
+  const handleDropdown = (idx) => {
+    setDropdownOpen(dropdownOpen === idx ? null : idx);
+  };
+
+  const handleAccountClick = () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    } else {
+      // Show account menu or profile
+    }
+  };
 
   return (
-    <header className="header">
-      {/* top strip: social / hotline / app links */}
-      <div className="top-strip">
-        <div className="top-inner">
-          <div className="top-left">📞 <strong>Hỗ trợ đặt khám</strong> <span className="top-phone">1900 2115</span></div>
-          <div className="top-right">
-            <a href="#">Tải ứng dụng</a>
-            <span className="sep">|</span>
-            <a href="#">Tiếng Việt</a>
+      <header className="header">
+        {/* Top social bar */}
+        <div className="top-strip">
+          <div className="top-inner">
+            <div className="top-social">
+                <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer">
+                  <img src="/assets/tiktok.png" alt="TikTok" style={{height:18,verticalAlign:'middle',marginRight:4}} />
+                  Tiktok
+                </a>
+                <span style={{margin:'0 8px',color:'#b0bec5'}}>|</span>
+                <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+                  <img src="../../assetsfacebook.png" alt="Facebook" style={{height:18,verticalAlign:'middle',marginRight:4}} />
+                  Facebook
+                </a>
+                <span style={{margin:'0 8px',color:'#b0bec5'}}>|</span>
+                <a href="https://zalo.me/" target="_blank" rel="noopener noreferrer">
+                  <img src="/assets/zalo.png" alt="Zalo" style={{height:18,verticalAlign:'middle',marginRight:4}} />
+                  Zalo
+                </a>
+                <span style={{margin:'0 8px',color:'#b0bec5'}}>|</span>
+                <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+                  <img src="/assets/youtube.png" alt="YouTube" style={{height:18,verticalAlign:'middle',marginRight:4}} />
+                  Youtube
+                </a>
+            </div>
+            <div className="top-actions">
+              <button className="btn-account" onClick={handleAccountClick}>👤 Tài khoản</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="header-container">
-        <div className="header-logo">
-          {/* Prefer an image logo at /public/logo.png - fallback to text */}
-          <a href="/" className="logo-link">
-            <img src="/logo.png" alt="Telemedicine logo" className="site-logo" onError={(e)=>{e.currentTarget.style.display='none'}} />
-            <h2 className="logo-text">Telemedicine</h2>
-          </a>
+        <div className="header-main">
+          <div className="header-left">
+            <a href="/" className="logo-link">
+              <img src="/logo.png" alt="Telemedicine logo" className="site-logo" />
+            </a>
+          </div>
+          <div className="header-center">
+            <input className="search-bar" type="search" placeholder="Tìm kiếm cơ sở y tế" />
+          </div>
+          <div className="header-right">
+            <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+              ☰
+            </button>
+            <nav className={`main-nav${menuOpen ? ' open' : ''}`}>
+              <ul>
+                <li className="nav-dropdown"
+                    onMouseEnter={() => setDropdownOpen(0)}
+                    onMouseLeave={() => setDropdownOpen(null)}
+                    onClick={() => handleDropdown(0)}
+                    aria-haspopup="true"
+                    aria-expanded={dropdownOpen === 0}
+                >
+                  <a href="#">Cơ sở y tế ▼</a>
+                  <ul className="dropdown-menu" style={{ display: dropdownOpen === 0 ? 'block' : 'none' }}>
+                    <li><a href="#">Đặt khám tại cơ sở</a></li>
+                    <li><a href="#">Đặt khám chuyên khoa</a></li>
+                    <li><a href="#">Gọi video với bác sĩ</a></li>
+                    {/* ...other items... */}
+                  </ul>
+                </li>
+                <li className="nav-dropdown"
+                    onMouseEnter={() => setDropdownOpen(1)}
+                    onMouseLeave={() => setDropdownOpen(null)}
+                    onClick={() => handleDropdown(1)}
+                    aria-haspopup="true"
+                    aria-expanded={dropdownOpen === 1}
+                >
+                  <a href="#">Dịch vụ y tế ▼</a>
+                  <ul className="dropdown-menu" style={{ display: dropdownOpen === 1 ? 'block' : 'none' }}>
+                    <li><a href="#">Đặt lịch xét nghiệm</a></li>
+                    <li><a href="#">Mua thuốc tại An Khang</a></li>
+                    {/* ...other items... */}
+                  </ul>
+                </li>
+                <li><a href="#">Khám sức khỏe doanh nghiệp</a></li>
+                <li><a href="#">Tin tức</a></li>
+                <li><a href="#">Hướng dẫn</a></li>
+                <li><a href="#">Liên hệ hợp tác</a></li>
+              </ul>
+            </nav>
+          </div>
         </div>
-
-        <button className="mobile-toggle" aria-label="Open menu" onClick={() => setOpen(!open)}>
-          <span className="hamburger" />
-        </button>
-
-        <nav className={`header-nav ${open ? 'open' : ''}`}>
-          <ul className="nav-menu">
-            <li><a href="/">Trang chủ</a></li>
-            <li><a href="/doctors">Bác sĩ</a></li>
-            <li><a href="/specialties">Chuyên khoa</a></li>
-            <li><a href="/about">Về chúng tôi</a></li>
-          </ul>
-        </nav>
-
-        <div className="header-auth">
-          {isAuthenticated ? (
-            <div className="user-section">
-              <span className="user-greeting">
-                Xin chào, <strong>{user.name}</strong>
-              </span>
-              <div className="user-dropdown">
-                <button className="user-avatar">
-                  {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
-                </button>
-                <div className="dropdown-menu">
-                  <a href="/profile">Thông tin cá nhân</a>
-                  <a href="/appointments">Lịch hẹn</a>
-                  <a href="/settings">Cài đặt</a>
-                  <button onClick={logout} className="btn-logout">
-                    Đăng xuất
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="auth-buttons">
-              <a href="/login" className="btn-login-link">
-                Đăng nhập
-              </a>
-              <a href="/register" className="btn-register-link">
-                Đăng ký
-              </a>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ticker / announcement similar to Medpro */}
-      <div className="header-ticker">Đặt Giúp Việc Cá Nhân hướng dẫn, hỗ trợ bạn đi khám từ lúc vào viện đến khi kết thúc khám. Gọi ngay 1900 2267!</div>
-    </header>
+      </header>
   );
 };
 

@@ -26,7 +26,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
+    @PostMapping("/admin")
     // API Test (từ lần trước)
     @GetMapping("/hello")
     public String sayHello() {
