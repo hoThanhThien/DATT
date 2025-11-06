@@ -55,9 +55,9 @@ const LoginPage = () => {
             <p>Chào mừng bạn đến với hệ thống Telemedicine</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="login-form">
+          <form onSubmit={handleSubmit} className="login-form" aria-live="polite" aria-busy={loading}>
             {error && (
-              <div className="error-message">
+              <div className="error-message" role="alert" aria-live="assertive" id="login-error">
                 {error}
               </div>
             )}
@@ -72,6 +72,7 @@ const LoginPage = () => {
                 placeholder="Nhập email hoặc số điện thoại"
                 required
                 autoComplete="username"
+                aria-describedby={error ? 'login-error' : undefined}
               />
             </div>
 
@@ -85,13 +86,15 @@ const LoginPage = () => {
                 placeholder="Nhập mật khẩu"
                 required
                 autoComplete="current-password"
+                aria-describedby={error ? 'login-error' : undefined}
               />
             </div>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="btn-login"
               disabled={loading}
+              aria-disabled={loading}
             >
               {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
             </button>

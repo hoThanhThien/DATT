@@ -3,31 +3,55 @@ package com.datt.userservice.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-@Entity // 1. IntelliJ đã tự tạo
-@Table(name = "users") // 2. Thêm dòng này để đặt tên bảng
-@Getter // (Lombok) Tự tạo getter
-@Setter // (Lombok) Tự tạo setter
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "users")
+@Getter
+@Setter
 public class User {
 
-    @Id // 3. IntelliJ đã tự tạo
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 4. Thêm dòng này để ID tự tăng
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 5. Thêm các cột còn lại
-    @Column(nullable = false, unique = true) // Không được trống, không được trùng
-    private String email;
+    @Column(nullable = false)
+    private String fullName;
+
+    private String gender;
 
     @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "phone", nullable = false, unique = true)
     private String phoneNumber;
 
     @Column(nullable = false)
     private String password;
 
-    private String fullName;
+    private String status;
 
-    @Column(nullable = false)
-    private String role; // (patient, doctor, admin)
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createAt;
 
-    // 6. IntelliJ có thể đã tạo 1 constructor, bạn có thể xóa nó nếu dùng Lombok
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
+
+    // ----- THÊM 2 TRƯỜNG LIÊN KẾT NGƯỢC -----
+
+    // 'mappedBy = "user"': Báo rằng 'user' (trong Patient.java) là chủ sở hữu
+    // 'cascade = CascadeType.ALL': Nếu xóa User, tự xóa Patient liên kết
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Patient patient;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Doctor doctor;
 }

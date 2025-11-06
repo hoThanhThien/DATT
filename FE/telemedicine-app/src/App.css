@@ -1,7 +1,24 @@
-#root {
+:root{
+  /* Medpro-inspired teal/blue palette */
+  --color-primary: #00A3B4; /* teal */
+  --color-primary-dark: #00758C; /* deep teal */
+  --color-cta: #00D1DD; /* brighter cyan for accents */
+  --accent-light: rgba(0,163,180,0.08);
+  --color-muted: #55606a;
+  --color-bg: #f4fbfb;
+  --radius-lg: 20px;
+  --radius-md: 12px;
+}
+
+html,body,#root {
   width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
+  background-color: var(--color-bg);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .logo {
@@ -11,10 +28,7 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 1.6em rgba(0,163,180,0.22));
 }
 
 @keyframes logo-spin {

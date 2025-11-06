@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
 import './HomePage.css';
+import Card from '../../components/ui/Card';
+import Footer from '../../components/layout/Footer';
+import HeroBookingCard from '../../components/hero/HeroBookingCard';
 
 const featureCards = [
 	{
@@ -71,6 +74,11 @@ const HomePage = () => {
 					<h1>
 						Kết nối bệnh nhân, bác sĩ và bệnh viện <span>mọi lúc - mọi nơi</span>
 					</h1>
+
+					{/* Search bar like Medpro */}
+					<div className="hero-search">
+						<input type="search" placeholder="Tìm kiếm bác sĩ, bệnh viện, chuyên khoa..." />
+					</div>
 					<p>
 						Từ đặt lịch, khám video, đến theo dõi bệnh án và thanh toán, tất cả hợp nhất trên một hệ
 						thống duy nhất tích hợp chuẩn y tế của MedPro.
@@ -84,30 +92,15 @@ const HomePage = () => {
 						</Link>
 					</div>
 				</div>
-				<div className="hero-metrics">
-					<div>
-						<strong>500+</strong>
-						<span>Bác sĩ chuyên khoa</span>
-					</div>
-					<div>
-						<strong>20K+</strong>
-						<span>Lịch khám thành công mỗi tháng</span>
-					</div>
-					<div>
-						<strong>98%</strong>
-						<span>Người dùng hài lòng</span>
-					</div>
-				</div>
+				<HeroBookingCard />
 			</section>
 
 			<section className="feature-grid">
-				{featureCards.map((feature) => (
-					<article className="feature-card" key={feature.title}>
-						<div className="feature-icon" aria-hidden>{feature.icon}</div>
-						<h3>{feature.title}</h3>
-						<p>{feature.description}</p>
-					</article>
-				))}
+							{featureCards.map((feature) => (
+								<Card key={feature.title} title={feature.title} icon={feature.icon}>
+									<p>{feature.description}</p>
+								</Card>
+							))}
 			</section>
 
 			<section className="workflow">
@@ -128,6 +121,8 @@ const HomePage = () => {
 					))}
 				</div>
 			</section>
+
+			<Footer />
 
 			<section className="testimonials">
 				<div className="testimonials-header">

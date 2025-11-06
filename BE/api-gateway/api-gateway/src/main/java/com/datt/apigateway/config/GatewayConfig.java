@@ -1,0 +1,33 @@
+package com.datt.apigateway.config;
+
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class GatewayConfig {
+
+    @Bean
+    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+        return builder.routes()
+
+                // ----- Cấu hình 1: Route cho User Service -----
+                .route("user_service_route", r -> r
+                        .path("/api/v1/users/**")
+                        // SỬA LẠI DÒNG NÀY:
+                        .uri("http://user-service:8080") // <-- Trỏ thẳng vào container
+                )
+
+                // ----- Cấu hình 2: Route cho Auth Service -----
+                .route("auth_service_route", r -> r
+                        .path("/api/v1/auth/**")
+                        // SỬA LẠI DÒNG NÀY:
+                        .uri("http://auth-service:8080") // <-- Trỏ thẳng vào container
+                )
+
+                // (Bạn sẽ thêm các service khác vào đây, ví dụ: appointment-service)
+
+                .build();
+    }
+}
