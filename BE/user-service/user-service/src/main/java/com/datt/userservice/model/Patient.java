@@ -1,10 +1,9 @@
 package com.datt.userservice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore; // <-- 1. THÊM IMPORT NÀY
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDate;
 
 @Entity
@@ -13,18 +12,17 @@ import java.time.LocalDate;
 @Setter
 public class Patient {
 
-    @Id // 1. Đây là Khóa chính
-    private Long id; // KHÔNG dùng @GeneratedValue
+    @Id
+    private Long id;
 
     @Column(name = "date_of_birth")
-    private LocalDate dob; // (Từ sơ đồ: dob)
+    private LocalDate dob;
 
-    private String insuranceNumber; // (Từ sơ đồ: insuranceNumber)
+    private String insuranceNumber;
 
-    // ----- PHẦN QUAN TRỌNG NHẤT -----
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId // 2. Báo cho JPA: "Hãy dùng ID của 'user' làm ID cho tôi"
-    @JoinColumn(name = "user_id") // 3. Tên cột khóa ngoại
-    @JsonIgnore
+    @MapsId
+    @JoinColumn(name = "user_id")
+    @JsonIgnore // <-- 2. THÊM DÒNG NÀY ĐỂ NGẮT VÒNG LẶP
     private User user;
 }

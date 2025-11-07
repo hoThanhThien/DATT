@@ -1,5 +1,6 @@
 package com.datt.userservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore; // <-- 1. THÊM IMPORT NÀY
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,18 +11,18 @@ import lombok.Setter;
 @Setter
 public class Doctor {
 
-    @Id // 1. Khóa chính (sẽ giống hệt user_id)
+    @Id
     private Long id;
 
-    private String specialization; // (Từ sơ đồ: specialization)
+    private String specialization;
 
-    private int experienceYears; // (Từ sơ đồ: experienceYears)
+    private int experienceYears;
 
-    private String workSchedule; // (Từ sơ đồ: workSchedule)
+    private String workSchedule;
 
-    // ----- PHẦN QUAN TRỌNG NHẤT -----
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId // 2. Báo JPA dùng ID của 'user' làm ID
-    @JoinColumn(name = "user_id") // 3. Tên cột khóa ngoại
+    @MapsId
+    @JoinColumn(name = "user_id")
+    @JsonIgnore // <-- 2. THÊM DÒNG NÀY ĐỂ NGẮT VÒNG LẶP
     private User user;
 }
