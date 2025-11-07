@@ -12,21 +12,22 @@ public class GatewayConfig {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
 
-                // ----- Cấu hình 1: Route cho User Service -----
+                // ----- Cấu hình 1: Route cho User Service (Đã có) -----
                 .route("user_service_route", r -> r
                         .path("/api/v1/users/**")
-                        // SỬA LẠI DÒNG NÀY:
-                        .uri("http://user-service:8080") // <-- Trỏ thẳng vào container
+                        .uri("http://user-service:8080") // Trỏ thẳng vào container
                 )
 
-                // ----- Cấu hình 2: Route cho Auth Service -----
+                // ----- Cấu hình 2: THÊM ROUTE CHO AUTH SERVICE -----
                 .route("auth_service_route", r -> r
+                        // 1. NẾU đường dẫn là /api/v1/auth/...
                         .path("/api/v1/auth/**")
-                        // SỬA LẠI DÒNG NÀY:
-                        .uri("http://auth-service:8080") // <-- Trỏ thẳng vào container
+                        // 2. THÌ chuyển tiếp đến service tên là 'auth-service'
+                        .uri("http://auth-service:8080") // Trỏ thẳng vào container
                 )
+                // --------------------------------------------------
 
-                // (Bạn sẽ thêm các service khác vào đây, ví dụ: appointment-service)
+                // (Bạn sẽ thêm các service khác vào đây...)
 
                 .build();
     }

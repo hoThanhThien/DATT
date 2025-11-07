@@ -35,11 +35,19 @@ public class SecurityConfig {
             com.datt.authservice.model.User user = userRepository.findByEmail(username)
                     .orElseThrow(() -> new UsernameNotFoundException("Không tìm thấy User: " + username));
 
+            // ----- THÊM KIỂM TRA NÀY -----
+            if (user.getRole() == null || user.getRole().getRoleName() == null) {
+                throw new UsernameNotFoundException("User " + username + " không có vai trò (role) hợp lệ.");
+            }
+            // ---------------------------------
+
+            String roleName = user.getRole().getRoleName().replace("ROLE_", "");
+
             // Trả về đối tượng UserDetails của Spring
             return org.springframework.security.core.userdetails.User
                     .withUsername(user.getEmail())
                     .password(user.getPassword()) // Mật khẩu đã mã hóa (lấy từ auth_db)
-                    .roles(user.getRole().getRoleName().replace("ROLE_", "")) // Bỏ "ROLE_"
+                    .roles(roleName)
                     .build();
         };
     }

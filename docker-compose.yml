@@ -48,7 +48,7 @@ services:
     networks:
       - telemedicine-net
     healthcheck:
-      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -85,7 +85,7 @@ services:
     ports:
       - "8082:8080"
     environment:
-      # (SỬA LẠI) Trỏ vào 'auth_db'
+      # SỬA LẠI: Trỏ vào cổng nội bộ CHUẨN là 5432
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/auth_db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=123456
