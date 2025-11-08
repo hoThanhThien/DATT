@@ -1,6 +1,10 @@
 import './Header.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import facebookIcon from '../../assets/facebook.png';
+import tiktokIcon from '../../assets/tiktok.svg';
+import zaloIcon from '../../assets/zalo.svg';
+import youtubeIcon from '../../assets/youtube.svg';
 
 const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(null);
@@ -27,23 +31,23 @@ const Header = () => {
         <div className="top-strip">
           <div className="top-inner">
             <div className="top-social">
-                <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer">
-                  <img src="/assets/tiktok.png" alt="TikTok" style={{height:18,verticalAlign:'middle',marginRight:4}} />
+                <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="TikTok - mở trong tab mới">
+                  <img src={tiktokIcon} alt="TikTok" style={{height:18,verticalAlign:'middle',marginRight:4}} />
                   Tiktok
                 </a>
                 <span style={{margin:'0 8px',color:'#b0bec5'}}>|</span>
-                <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-                  <img src="../../assetsfacebook.png" alt="Facebook" style={{height:18,verticalAlign:'middle',marginRight:4}} />
+                <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook - mở trong tab mới">
+                  <img src={facebookIcon} alt="Facebook" style={{height:18,verticalAlign:'middle',marginRight:4}} />
                   Facebook
                 </a>
                 <span style={{margin:'0 8px',color:'#b0bec5'}}>|</span>
-                <a href="https://zalo.me/" target="_blank" rel="noopener noreferrer">
-                  <img src="/assets/zalo.png" alt="Zalo" style={{height:18,verticalAlign:'middle',marginRight:4}} />
+                <a href="https://zalo.me/" target="_blank" rel="noopener noreferrer" aria-label="Zalo - mở trong tab mới">
+                  <img src={zaloIcon} alt="Zalo" style={{height:18,verticalAlign:'middle',marginRight:4}} />
                   Zalo
                 </a>
                 <span style={{margin:'0 8px',color:'#b0bec5'}}>|</span>
-                <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
-                  <img src="/assets/youtube.png" alt="YouTube" style={{height:18,verticalAlign:'middle',marginRight:4}} />
+                <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube - mở trong tab mới">
+                  <img src={youtubeIcon} alt="YouTube" style={{height:18,verticalAlign:'middle',marginRight:4}} />
                   Youtube
                 </a>
             </div>

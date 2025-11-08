@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
+import { register as apiRegister } from '../../services/auth.service';
 
 const RegisterPage = () => {
   const [form, setForm] = useState({
@@ -13,6 +15,7 @@ const RegisterPage = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,11 +25,18 @@ const RegisterPage = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    // TODO: Call API to register
-    setTimeout(() => {
+    try {
+      // call backend register API
+      await apiRegister(form);
       setLoading(false);
-      alert('Đăng ký thành công!');
-    }, 1000);
+      // redirect to login page after successful registration
+      navigate('/login');
+    } catch (err) {
+      setLoading(false);
+      // Show a helpful error message
+      const msg = err?.response?.data || err.message || 'Đăng ký thất bại';
+      setError(typeof msg === 'string' ? msg : JSON.stringify(msg));
+    }
   };
 
   return (

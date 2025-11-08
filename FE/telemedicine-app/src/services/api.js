@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+// In dev, prefer Vite proxy by using a relative baseURL to avoid CORS entirely.
+// In prod, override with VITE_API_BASE_URL.
+const computedBaseURL =
+  import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? '/api/v1' : 'http://localhost:8080/api/v1');
+
 const api = axios.create({
-	baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api',
+	baseURL: computedBaseURL,
 	timeout: 15000,
 	headers: {
 		'Content-Type': 'application/json',
