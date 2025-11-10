@@ -25,6 +25,14 @@ public class GatewayConfig {
                         // 2. THÌ chuyển tiếp đến service tên là 'auth-service'
                         .uri("http://auth-service:8080") // Trỏ thẳng vào container
                 )
+
+                // ----- Cấu hình 3: THÊM ROUTE CHO APPOINTMENT SERVICE -----
+                .route("appointment_service_route", r -> r
+                        // 1. NẾU đường dẫn là /api/v1/appointment/...
+                        .path("/api/v1/appointments/**")
+                        // 2. THÌ chuyển tiếp đến service tên là 'appointment-service'
+                        .uri("http://appointment-service:8080") // Trỏ thẳng vào container
+                )
                 // --------------------------------------------------
 
                 // (Bạn sẽ thêm các service khác vào đây...)
