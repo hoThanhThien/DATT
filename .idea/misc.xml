@@ -6,6 +6,12 @@
       <list>
         <option value="$PROJECT_DIR$/BE/appointment-service/appointment-service/pom.xml" />
         <option value="$PROJECT_DIR$/BE/user-service/user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/BE/auth-service/auth-service/pom.xml" />
+        <option value="$PROJECT_DIR$/BE/api-gateway/api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/BE/chat-service/chat-service/pom.xml" />
+        <option value="$PROJECT_DIR$/BE/video-service/video-service/pom.xml" />
+        <option value="$PROJECT_DIR$/BE/medical-record-service/medical-record-service/pom.xml" />
+        <option value="$PROJECT_DIR$/BE/payment-service/payment-service/pom.xml" />
       </list>
     </option>
   </component>
