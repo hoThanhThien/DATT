@@ -9,7 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
       </profile>
-      <profile name="Annotation profile for chat-service" enabled="true">
+      <profile name="Annotation profile for video-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -19,8 +19,8 @@
         <module name="auth-service" />
         <module name="payment-service" />
         <module name="appointment-service" />
-        <module name="medical-record-service" />
         <module name="video-service" />
+        <module name="medical-record-service" />
         <module name="chat-service" />
         <module name="user-service" />
       </profile>
