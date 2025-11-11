@@ -33,6 +33,22 @@ public class GatewayConfig {
                         // 2. THÌ chuyển tiếp đến service tên là 'appointment-service'
                         .uri("http://appointment-service:8080") // Trỏ thẳng vào container
                 )
+
+                // ----- Cấu hình 4: THÊM ROUTE CHO APPOINTMENT SERVICE -----
+                .route("chat_service_route", r -> r
+                        // 1. NẾU đường dẫn là /api/v1/chat/...
+                        .path("/api/v1/chat/**")
+                        // 2. THÌ chuyển tiếp đến service tên là 'chat-service'
+                        .uri("http://chat-service:8080") // Trỏ thẳng vào container
+                )
+
+                // ----- Cấu hình 5: THÊM ROUTE CHO APPOINTMENT SERVICE -----
+                .route("medical_record_service_route", r -> r
+                        // 1. NẾU đường dẫn là /api/v1/medical-records/...
+                        .path("/api/v1/medical-records/**")
+                        // 2. THÌ chuyển tiếp đến service tên là 'medical-record-service'
+                        .uri("http://medical-record-service:8080") // Trỏ thẳng vào container
+                )
                 // --------------------------------------------------
 
                 // (Bạn sẽ thêm các service khác vào đây...)

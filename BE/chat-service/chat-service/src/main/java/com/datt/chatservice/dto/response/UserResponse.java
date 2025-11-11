@@ -12,7 +12,6 @@ public class UserResponse {
     String id;
     String userId;
     String username;
-    String firstName;
-    String lastName;
-    String avatar;
+    String fullName;
+    String email;
 }
