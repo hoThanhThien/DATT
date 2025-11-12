@@ -1,33 +1,33 @@
 package com.datt.chatservice.model;
 
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.springframework.data.mongodb.core.index.Indexed;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
-
-import java.time.Instant;
 import java.util.List;
 
-@Setter
-@Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Document(collection = "conversation")
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Document(collection = "conversations")
 public class Conversation {
-    @MongoId
-    String id;
+    // Getters & Setters
+    @Getter
+    @Setter
+    @Id
+    private String id;
+    @Setter
+    @Getter
+    private String appointmentId;
+    @Getter
+    private String doctorId;
+    @Setter
+    @Getter
+    private String patientId;
+    private List<String> messages;
 
-    String type; // GROUP, DIRECT
+    public Conversation() {}
 
-    @Indexed(unique = true)
-    String participantsHash;
-
-    List<ParticipantInfo> participants;
-
-    Instant createdDate;
-
-    Instant modifiedDate;
+    public Conversation(String appointmentId, String doctorId, String patientId) {
+        this.appointmentId = appointmentId;
+        this.doctorId = doctorId;
+        this.patientId = patientId;
+    }
 }
