@@ -3,27 +3,58 @@ import './HomePage.css';
 import Card from '../../components/ui/Card';
 import Footer from '../../components/layout/Footer';
 import HeroBookingCard from '../../components/hero/HeroBookingCard';
+import doctor1 from '../../assets/doctors/doctor-1.png';
+import doctor2 from '../../assets/doctors/doctor-2.png';
+import doctor3 from '../../assets/doctors/doctor-3.png';
+import doctor4 from '../../assets/doctors/doctor-4.png';
 
 const featureCards = [
 	{
-		title: 'Đặt lịch khám nhanh chóng',
-		description: 'Đặt lịch trực tuyến, theo dõi trạng thái và nhận thông báo lịch hẹn mọi lúc.',
-		icon: '📅',
+		title: 'Tầm soát - Phòng ngừa',
+		description: 'Kiểm tra sức khỏe định kỳ và phát hiện sớm các bệnh lý.',
+		icon: '🔍',
 	},
 	{
-		title: 'Khám từ xa trong 1 chạm',
-		description: 'Trò chuyện video bảo mật với bác sĩ thông qua phiên khám tiêu chuẩn y tế.',
+		title: 'Phục hồi - Nâng cao sức khỏe',
+		description: 'Hỗ trợ phục hồi chức năng và cải thiện chất lượng sống toàn diện.',
+		icon: '💪',
+	},
+	{
+		title: 'Khám video bảo mật',
+		description: 'Trò chuyện trực tuyến với bác sĩ chuyên khoa theo tiêu chuẩn y tế.',
 		icon: '🎥',
 	},
 	{
-		title: 'Hồ sơ & toa thuốc điện tử',
-		description: 'Lưu trữ bệnh án, toa thuốc, kết quả xét nghiệm tập trung và truy cập tức thì.',
-		icon: '📄',
+		title: 'Hồ sơ bệnh án điện tử',
+		description: 'Quản lý toàn bộ toa thuốc, xét nghiệm và lịch sử khám trực tuyến.',
+		icon: '📋',
+	},
+];
+
+const doctors = [
+	{
+		id: 1,
+		name: 'BS. Cao Quốc Hùng',
+		specialty: 'Chuyên khoa Tim mạch',
+		image: doctor1,
 	},
 	{
-		title: 'Thanh toán linh hoạt',
-		description: 'Hỗ trợ nhiều phương thức thanh toán, bảo hiểm và theo dõi hoá đơn minh bạch.',
-		icon: '💳',
+		id: 2,
+		name: 'BS. Nguyễn Việt Thành',
+		specialty: 'Chuyên khoa Nội tổng quát',
+		image: doctor2,
+	},
+	{
+		id: 3,
+		name: 'BS. Nguyễn Thị Diễm Lệ',
+		specialty: 'Chuyên khoa Sản - Phụ khoa',
+		image: doctor3,
+	},
+	{
+		id: 4,
+		name: 'BS. Nguyễn Thị Thu Trúc',
+		specialty: 'Chuyên khoa Nhi khoa',
+		image: doctor4,
 	},
 ];
 
@@ -94,6 +125,28 @@ const HomePage = () => {
 				<HeroBookingCard />
 			</section>
 
+			<section className="about-section">
+				<div className="about-header">
+					<span className="about-label">VỀ CHÚNG TÔI</span>
+					<h2>CHUYÊN MÔN Y TẾ VÀ CHĂM SÓC SỨC KHỎE</h2>
+					<p>Chúng tôi cung cấp dịch vụ y tế chuyên môn toàn diện với các bác sĩ giàu kinh nghiệm, đảm bảo chất lượng chăm sóc sức khỏe tốt nhất cho mọi bệnh nhân.</p>
+				</div>
+				<Link to="/doctors" className="btn primary">ĐỌC THÊM</Link>
+			</section>
+
+			<section className="doctors-section">
+				<h2 className="doctors-title">CHUYÊN GIA CỦA CHÚNG TÔI</h2>
+				<div className="doctors-grid">
+					{doctors.map((doctor) => (
+						<div className="doctor-card" key={doctor.id}>
+							<img src={doctor.image} alt={doctor.name} className="doctor-avatar" />
+							<h4>{doctor.name}</h4>
+							<p>{doctor.specialty}</p>
+						</div>
+					))}
+				</div>
+			</section>
+
 			<section className="feature-grid">
 				{featureCards.map((feature) => (
 					<div className="feature-card" key={feature.title}>
@@ -137,22 +190,51 @@ const HomePage = () => {
 			</section>
 
 			{/* CTA Section */}
+			<section className="registration-section">
+				<h2 className="registration-title">ĐĂNG KÝ KHÁM</h2>
+				<p className="registration-subtitle">Hãy điền thông tin để chúng tôi liên hệ và tư vấn phương án khám phù hợp với bạn</p>
+				<form className="registration-form" onSubmit={(e) => e.preventDefault()}>
+					<div className="form-row">
+						<input type="text" placeholder="Họ và tên" required />
+						<input type="email" placeholder="Email" required />
+					</div>
+					<div className="form-row">
+						<input type="tel" placeholder="Ngày sinh" required />
+						<input type="tel" placeholder="Số điện thoại" required />
+					</div>
+					<div className="form-row">
+						<select required>
+							<option value="">Khám online</option>
+							<option value="online">Khám online</option>
+							<option value="offline">Khám trực tiếp</option>
+						</select>
+						<select required>
+							<option value="">Khám tại cơ sở</option>
+							<option value="home">Tại nhà</option>
+							<option value="center">Tại trung tâm y tế</option>
+						</select>
+					</div>
+					<input type="text" placeholder="Bác sĩ" style={{width: '100%'}} required />
+					<textarea placeholder="Triệu chứng" rows="4"></textarea>
+					<button type="submit" className="btn primary">GỬI YÊU CẦU</button>
+				</form>
+			</section>
+
 			<section className="cta-section">
 				<div className="cta-card">
-					<h2>Bắt đầu trải nghiệm Telemedicine chuẩn MedPro</h2>
+					<h2>Bắt đầu trải nghiệm dịch vụ y tế trực tuyến</h2>
 					<p>
-						Đăng ký tài khoản ngay hôm nay để khai thác đầy đủ các mô-đun Quản lý bệnh nhân, Lịch khám,
-						Hồ sơ và Thanh toán điện tử.
+						Đăng ký tài khoản ngay hôm nay để khai thác đầy đủ các dịch vụ khám, quản lý bệnh án,
+						hồ sơ và thanh toán điện tử.
 					</p>
 					<div className="cta-actions">
 						<Link to="/register" className="btn primary">
 							Tạo tài khoản miễn phí
 						</Link>
 						<Link to="/contact" className="btn outline">
-							Liên hệ tư vấn giải pháp
+							Liên hệ tư vấn
 						</Link>
 					</div>
-					{/* TODO: Thêm liên kết tải app mobile khi có */}
 				</div>
 			</section>
 

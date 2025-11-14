@@ -11,6 +11,8 @@ const PatientLayout = () => {
                 <h3>Menu Bệnh nhân</h3>
                 <ul>
                     <li><Link to="/patient">Dashboard</Link></li>
+                    {/* TODO: Update link below when medical-records moves to protected route */}
+                    <li><Link to="/medical-records">Hồ sơ khám bệnh</Link></li>
                     <li><Link to="/patient/book-appointment">Đặt lịch</Link></li>
                     <li><Link to="/">Về trang chủ</Link></li>
                 </ul>

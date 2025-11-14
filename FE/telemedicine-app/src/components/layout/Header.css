@@ -35,7 +35,7 @@ body {
   margin: 0 auto;
   padding: 5px 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
 }
 .top-social a {
@@ -50,8 +50,31 @@ body {
   color: #00A3B4;
 }
 .top-actions {
-  display: flex;
+  display: none;
   gap: 6px;
+}
+.btn-account-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(90deg,#00c6fb 0%,#005bea 100%);
+  color: #fff;
+  font-weight: 700;
+  border: 2px solid #00c6fb;
+  border-radius: 24px;
+  padding: 8px 22px;
+  font-size: 17px;
+  box-shadow: 0 4px 16px rgba(0,198,251,0.13);
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, transform 0.18s;
+  outline: none;
+  text-shadow: 0 2px 8px rgba(0,198,251,0.10);
+}
+.btn-account-nav:hover {
+  background: linear-gradient(90deg,#009ee3 0%,#005bea 100%);
+  color: #fff;
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(0,198,251,0.18);
 }
 .btn-top {
   border-radius: 18px;
@@ -144,6 +167,7 @@ body {
   display: flex;
   gap: 14px;
   list-style: none;
+  align-items: center;
 }
 .main-nav a {
   text-decoration: none;

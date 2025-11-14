@@ -10,9 +10,11 @@ import AdminLayout from './layouts/AdminLayout'
 import HomePage from './pages/public/HomePage'
 import LoginPage from './pages/public/LoginPage'
 import RegisterPage from './pages/public/RegisterPage'
+import ChatPage from './pages/public/ChatPage'
 
 // Patient Pages
 import PatientDashboardPage from './pages/patient/PatientDashboardPage'
+import MedicalRecordPage from './pages/patient/MedicalRecordPage'
 
 // Doctor Pages
 import DoctorDashboardPage from './pages/doctor/DoctorDashboardPage'
@@ -31,6 +33,9 @@ function App() {
                 <Route index element={<HomePage />} />
                 <Route path="login" element={<LoginPage />} />
                 <Route path="register" element={<RegisterPage />} />
+                {/* TODO: Change medical-records to require login - Move to PATIENT ROUTES when needed */}
+                <Route path="medical-records" element={<MedicalRecordPage />} />
+                <Route path="chat" element={<ChatPage />} />
                 {/* Thêm các trang public khác ở đây (doctors...) */}
             </Route>
 
@@ -44,6 +49,8 @@ function App() {
                 }
             >
                 <Route index element={<PatientDashboardPage />} />
+                {/* TODO: Uncomment line below when medical-records requires login protection */}
+                {/* <Route path="medical-records" element={<MedicalRecordPage />} /> */}
                 {/* <Route path="book-appointment" element={<BookAppointmentPage />} /> */}
             </Route>
 
