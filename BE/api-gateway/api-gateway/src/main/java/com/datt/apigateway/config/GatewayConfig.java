@@ -12,46 +12,46 @@ public class GatewayConfig {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
 
-                // ----- Cấu hình 1: Route cho User Service (Đã có) -----
-                .route("user_service_route", r -> r
+                // ----- CÁC ROUTE HTTP (REST API) - Bạn đã có -----
+                .route("user_service_http_route", r -> r
                         .path("/api/v1/users/**")
-                        .uri("http://user-service:8080") // Trỏ thẳng vào container
+                        .uri("http://user-service:8080")
                 )
-
-                // ----- Cấu hình 2: THÊM ROUTE CHO AUTH SERVICE -----
-                .route("auth_service_route", r -> r
-                        // 1. NẾU đường dẫn là /api/v1/auth/...
+                .route("auth_service_http_route", r -> r
                         .path("/api/v1/auth/**")
-                        // 2. THÌ chuyển tiếp đến service tên là 'auth-service'
-                        .uri("http://auth-service:8080") // Trỏ thẳng vào container
+                        .uri("http://auth-service:8080")
                 )
-
-                // ----- Cấu hình 3: THÊM ROUTE CHO APPOINTMENT SERVICE -----
-                .route("appointment_service_route", r -> r
-                        // 1. NẾU đường dẫn là /api/v1/appointment/...
+                .route("appointment_service_http_route", r -> r
                         .path("/api/v1/appointments/**")
-                        // 2. THÌ chuyển tiếp đến service tên là 'appointment-service'
-                        .uri("http://appointment-service:8080") // Trỏ thẳng vào container
+                        .uri("http://appointment-service:8080")
                 )
-
-                // ----- Cấu hình 4: THÊM ROUTE CHO APPOINTMENT SERVICE -----
-                .route("chat_service_route", r -> r
-                        // 1. NẾU đường dẫn là /api/v1/chat/...
-                        .path("/api/v1/chat/**")
-                        // 2. THÌ chuyển tiếp đến service tên là 'chat-service'
-                        .uri("http://chat-service:8080") // Trỏ thẳng vào container
-                )
-
-                // ----- Cấu hình 5: THÊM ROUTE CHO APPOINTMENT SERVICE -----
-                .route("medical_record_service_route", r -> r
-                        // 1. NẾU đường dẫn là /api/v1/medical-records/...
+                .route("medical_record_service_http_route", r -> r
                         .path("/api/v1/medical-records/**")
-                        // 2. THÌ chuyển tiếp đến service tên là 'medical-record-service'
-                        .uri("http://medical-record-service:8080") // Trỏ thẳng vào container
+                        .uri("http://medical-record-service:8080")
                 )
-                // --------------------------------------------------
 
-                // (Bạn sẽ thêm các service khác vào đây...)
+                // (Route HTTP cho chat, nếu có API lấy lịch sử)
+                .route("chat_service_http_route", r -> r
+                        .path("/api/v1/chat/**")
+                        .uri("http://chat-service:8080")
+                )
+
+                // ----- CÁC ROUTE WEBSOCKET (BỊ THIẾU) -----
+
+                // ----- 1. THÊM ROUTE CHO CHAT (WEBSOCKET) -----
+                .route("chat_service_ws_route", r -> r
+                        // 1. NẾU đường dẫn là /ws/chat/... (Kết nối WebSocket)
+                        .path("/ws/chat/**")
+                        // 2. THÌ chuyển tiếp đến service 'chat-service'
+                        // (Lưu ý: URI bắt đầu bằng "ws://", không phải "http://")
+                        .uri("ws://chat-service:8080")
+                )
+
+                // ----- 2. THÊM ROUTE CHO VIDEO (WEBSOCKET) -----
+                .route("video_service_ws_route", r -> r
+                        .path("/ws/video/**")
+                        .uri("ws://video-service:8080") // Trỏ đến container 'video-service'
+                )
 
                 .build();
     }

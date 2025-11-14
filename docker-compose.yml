@@ -11,10 +11,8 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=123456
-      # (Đã XÓA 'POSTGRES_DB' để dùng init.sql)
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      # (THÊM DÒNG NÀY) Bảo Docker chạy file init.sql của bạn
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - telemedicine-net
@@ -64,14 +62,16 @@ services:
     ports:
       - "8081:8080"
     environment:
-      # (SỬA LẠI) Trỏ vào 'user_db'
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/user_db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=123456
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_HOST=rabbitmq # <-- (ĐÃ THÊM)
+      - spring.cloud.compatibility-verifier.enabled=false # <-- (ĐÃ THÊM)
     depends_on:
       postgres-db:
+        condition: service_healthy
+      rabbitmq: # <-- (ĐÃ THÊM)
         condition: service_healthy
     networks:
       - telemedicine-net
@@ -85,14 +85,16 @@ services:
     ports:
       - "8082:8080"
     environment:
-      # SỬA LẠI: Trỏ vào cổng nội bộ CHUẨN là 5432
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/auth_db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=123456
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_HOST=rabbitmq # <-- (ĐÃ THÊM)
+      - spring.cloud.compatibility-verifier.enabled=false # <-- (ĐÃ THÊM)
     depends_on:
       postgres-db:
+        condition: service_healthy
+      rabbitmq: # <-- (ĐÃ THÊM)
         condition: service_healthy
     networks:
       - telemedicine-net
@@ -106,12 +108,12 @@ services:
     ports:
       - "8083:8080"
     environment:
-      # (SỬA LẠI) Trỏ vào 'appointment_db'
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/appointment_db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=123456
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_RABBITMQ_HOST=rabbitmq
+      - spring.cloud.compatibility-verifier.enabled=false # <-- (ĐÃ THÊM)
     depends_on:
       postgres-db:
         condition: service_healthy
@@ -129,12 +131,12 @@ services:
     ports:
       - "8084:8080"
     environment:
-      # (SỬA LẠI) Trỏ vào 'payment_db'
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/payment_db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=123456
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_RABBITMQ_HOST=rabbitmq
+      - spring.cloud.compatibility-verifier.enabled=false # <-- (ĐÃ THÊM)
     depends_on:
       postgres-db:
         condition: service_healthy
@@ -153,6 +155,7 @@ services:
       - "8085:8080"
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb://mongo-db:27017/chat_db
+      - spring.cloud.compatibility-verifier.enabled=false # <-- (ĐÃ THÊM)
     depends_on:
       mongo-db:
         condition: service_healthy
@@ -170,6 +173,7 @@ services:
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb://mongo-db:27017/medical_db
       - SPRING_RABBITMQ_HOST=rabbitmq
+      - spring.cloud.compatibility-verifier.enabled=false # <-- (ĐÃ THÊM)
     depends_on:
       mongo-db:
         condition: service_healthy
@@ -188,6 +192,7 @@ services:
       - "8087:8080"
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb://mongo-db:27017/video_db
+      - spring.cloud.compatibility-verifier.enabled=false # <-- (ĐÃ THÊM)
     depends_on:
       mongo-db:
         condition: service_healthy
@@ -205,6 +210,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_AUTOCONFIGURE_EXCLUDE=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - spring.cloud.compatibility-verifier.enabled=false # <-- (ĐÃ THÊM)
     depends_on:
       user-service:
         condition: service_started

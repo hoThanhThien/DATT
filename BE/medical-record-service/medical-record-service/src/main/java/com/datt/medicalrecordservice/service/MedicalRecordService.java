@@ -3,56 +3,41 @@ package com.datt.medicalrecordservice.service;
 import com.datt.medicalrecordservice.model.MedicalRecord;
 import com.datt.medicalrecordservice.model.Status;
 import com.datt.medicalrecordservice.repository.MedicalRecordRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MedicalRecordService {
 
-    private final MedicalRecordRepository repository;
+    @Autowired
+    private MedicalRecordRepository medicalRecordRepository;
 
-    public MedicalRecordService(MedicalRecordRepository repository) {
-        this.repository = repository;
+    // Bác sĩ tạo/cập nhật bệnh án
+    public MedicalRecord saveRecord(MedicalRecord record) {
+        // (Service này không cần @CreationTimestamp hay @LastModifiedDate,
+        // vì @EnableMongoAuditing đã tự động xử lý chúng)
+        return medicalRecordRepository.save(record);
     }
 
-    public List<MedicalRecord> getAllRecords() {
-        return repository.findAll();
+    // Lấy bệnh án theo ID lịch hẹn
+    public MedicalRecord getRecordByAppointmentId(Long appointmentId) {
+        return medicalRecordRepository.findByAppointmentId(appointmentId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy bệnh án cho lịch hẹn ID: " + appointmentId));
     }
 
-    public Optional<MedicalRecord> getRecordById(Long id) {
-        return repository.findById(id);
+    // Lấy tất cả bệnh án của một bệnh nhân
+    public List<MedicalRecord> getRecordsByPatientId(Long patientId) {
+        return medicalRecordRepository.findByPatientId(patientId);
     }
 
-    public MedicalRecord createRecord(MedicalRecord record) {
-        return repository.save(record);
-    }
+    // Đóng bệnh án
+    public MedicalRecord closeRecord(String recordId) {
+        MedicalRecord record = medicalRecordRepository.findById(recordId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy bệnh án ID: " + recordId));
 
-    public MedicalRecord updateRecord(Long id, MedicalRecord updated) {
-        return repository.findById(id)
-                .map(record -> {
-                    record.setSymptoms(updated.getSymptoms());
-                    record.setDiagnosis(updated.getDiagnosis());
-                    record.setTreatment(updated.getTreatment());
-                    record.setPrescription(updated.getPrescription());
-                    record.setConclusion(updated.getConclusion());
-                    return repository.save(record);
-                })
-                .orElseThrow(() -> new RuntimeException("Record not found"));
-    }
-
-    public void deleteRecord(Long id) {
-        repository.deleteById(id);
-    }
-
-    public List<MedicalRecord> getActiveRecords() {
-        return repository.findByStatus(Status.ACTIVE);
-    }
-
-    public MedicalRecord closeRecord(Long id) {
-        MedicalRecord record = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Record not found"));
-        record.closeRecord();
-        return repository.save(record);
+        record.setStatus(Status.CLOSED);
+        return medicalRecordRepository.save(record);
     }
 }
