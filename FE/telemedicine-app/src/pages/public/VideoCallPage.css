@@ -1,0 +1,286 @@
+.video-call-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.video-call-container {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  height: 90vh;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Main Video Area */
+.main-video-area {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+.main-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+}
+
+/* Call Info */
+.call-info {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.call-time {
+  font-size: 24px;
+  font-weight: 300;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.call-participants {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #ccc;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 8px 12px;
+  border-radius: 20px;
+}
+
+.participant-icon {
+  font-size: 16px;
+}
+
+/* Remote Video Small */
+.remote-video-small {
+  position: absolute;
+  bottom: 140px;
+  right: 20px;
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #1a1a1a;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.remote-video-small video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Call Controls */
+.call-controls {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 16px;
+  z-index: 100;
+}
+
+.control-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.control-btn.active {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.end-call-btn {
+  background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+  width: 64px;
+  height: 64px;
+  font-size: 28px;
+}
+
+.end-call-btn:hover {
+  background: linear-gradient(135deg, #ff5555 0%, #dd1111 100%);
+  transform: scale(1.08);
+}
+
+/* Bottom Controls */
+.call-bottom-controls {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  gap: 12px;
+}
+
+.bottom-control-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.bottom-control-icon:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}
+
+/* Close Button */
+.close-call-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 101;
+}
+
+.close-call-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .video-call-container {
+    width: 95%;
+    height: 95vh;
+    border-radius: 8px;
+  }
+
+  .control-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .end-call-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+
+  .remote-video-small {
+    width: 140px;
+    height: 140px;
+    bottom: 120px;
+    right: 12px;
+  }
+
+  .call-info {
+    top: 12px;
+    left: 12px;
+  }
+
+  .call-time {
+    font-size: 18px;
+  }
+
+  .call-participants {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-call-overlay {
+    background: #000;
+  }
+
+  .video-call-container {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .control-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+
+  .end-call-btn {
+    width: 52px;
+    height: 52px;
+    font-size: 22px;
+  }
+
+  .remote-video-small {
+    width: 120px;
+    height: 120px;
+    bottom: 100px;
+    right: 10px;
+  }
+
+  .call-controls {
+    gap: 12px;
+    bottom: 20px;
+  }
+
+  .call-bottom-controls {
+    bottom: 20px;
+    right: 20px;
+    gap: 10px;
+  }
+
+  .bottom-control-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}

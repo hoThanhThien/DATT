@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import './ChatPage.css';
+import VideoCallPage from './VideoCallPage';
 
 const ChatPage = () => {
   const [selectedChat, setSelectedChat] = useState(null);
+  const [isVideoCallActive, setIsVideoCallActive] = useState(false);
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -32,6 +34,14 @@ const ChatPage = () => {
     setSelectedChat(chat);
   };
 
+  const handleVideoCall = () => {
+    setIsVideoCallActive(true);
+  };
+
+  const handleEndVideoCall = () => {
+    setIsVideoCallActive(false);
+  };
+
   const handleSendMessage = () => {
     if (inputMessage.trim()) {
       const newMessage = {
@@ -54,25 +64,37 @@ const ChatPage = () => {
 
   return (
     <div className="chat-page">
+      {isVideoCallActive && (
+        <VideoCallPage 
+          onClose={handleEndVideoCall} 
+          doctorName={selectedChat?.name}
+        />
+      )}
       <div className="chat-container">
         {/* Chat Header */}
         <div className="chat-header">
-          <div className="header-left">
+          <div className="header-chat-list">
             <h2>Chat</h2>
           </div>
-          <div className="header-right">
-            {selectedChat && (
+          <div className="header-chat-messages">
+            {selectedChat ? (
               <>
-                <div className="doctor-info">
-                  <span className="doctor-avatar"></span>
-                  <span className="doctor-name">{selectedChat.name}</span>
+                <div className="header-left">
+                  <span className="chat-avatar"></span>
+                  <span className="chat-doctor-name">{selectedChat.name}</span>
                 </div>
-                <div className="header-actions">
-                  <button className="action-btn phone-btn" title="Goi dien"></button>
-                  <button className="action-btn video-btn" title="Goi video"></button>
+                <div className="header-right">
+                  <button className="header-icon-btn call-icon" title="Gọi điện">
+                  </button>
+                  <button 
+                    className="header-icon-btn video-icon" 
+                    title="Gọi video"
+                    onClick={handleVideoCall}
+                  >
+                  </button>
                 </div>
               </>
-            )}
+            ) : null}
           </div>
         </div>
 
