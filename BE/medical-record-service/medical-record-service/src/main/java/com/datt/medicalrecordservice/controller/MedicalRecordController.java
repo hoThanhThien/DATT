@@ -2,51 +2,39 @@ package com.datt.medicalrecordservice.controller;
 
 import com.datt.medicalrecordservice.model.MedicalRecord;
 import com.datt.medicalrecordservice.service.MedicalRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/medical-records")
+@RequestMapping("/api/v1/medical-records")
 public class MedicalRecordController {
 
-    private final MedicalRecordService service;
+    @Autowired
+    private MedicalRecordService medicalRecordService;
 
-    public MedicalRecordController(MedicalRecordService service) {
-        this.service = service;
-    }
-
-    @GetMapping
-    public List<MedicalRecord> getAll() {
-        return service.getAllRecords();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<MedicalRecord> getById(@PathVariable Long id) {
-        return service.getRecordById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
+    // API 1: Bác sĩ tạo/cập nhật bệnh án (POST)
     @PostMapping
-    public ResponseEntity<MedicalRecord> create(@RequestBody MedicalRecord record) {
-        return ResponseEntity.ok(service.createRecord(record));
+    public ResponseEntity<MedicalRecord> createOrUpdateRecord(@RequestBody MedicalRecord record) {
+        MedicalRecord savedRecord = medicalRecordService.saveRecord(record);
+        return ResponseEntity.ok(savedRecord);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<MedicalRecord> update(@PathVariable Long id, @RequestBody MedicalRecord record) {
-        return ResponseEntity.ok(service.updateRecord(id, record));
+    // API 2: Lấy bệnh án của 1 lịch hẹn (GET)
+    @GetMapping("/appointment/{appointmentId}")
+    public ResponseEntity<MedicalRecord> getRecordByAppointment(@PathVariable Long appointmentId) {
+        try {
+            return ResponseEntity.ok(medicalRecordService.getRecordByAppointmentId(appointmentId));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.deleteRecord(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping("/{id}/close")
-    public ResponseEntity<MedicalRecord> close(@PathVariable Long id) {
-        return ResponseEntity.ok(service.closeRecord(id));
+    // API 3: Lấy toàn bộ bệnh án của 1 bệnh nhân (GET)
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<List<MedicalRecord>> getRecordsByPatient(@PathVariable Long patientId) {
+        return ResponseEntity.ok(medicalRecordService.getRecordsByPatientId(patientId));
     }
 }

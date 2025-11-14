@@ -1,16 +1,26 @@
 package com.datt.medicalrecordservice.model;
 
-import jakarta.persistence.*;
+import lombok.Data;
+import org.springframework.data.annotation.CreatedDate; // 1. Thêm import
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate; // 2. Thêm import
+import org.springframework.data.mongodb.core.mapping.Document; // 3. Dùng @Document
+
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "medical_records")
+@Data // 4. Dùng Lombok (thay cho Getters/Setters thủ công)
+@Document(collection = "records") // 5. Tên "bảng" (collection) trong 'medical_db'
 public class MedicalRecord {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id; // 6. MongoDB dùng String ID
 
+    // (Theo sơ đồ của bạn, bạn cần các ID này để liên kết)
+    private Long appointmentId;
+    private Long patientId;
+    private Long doctorId;
+
+    // (Các trường này lấy từ code của bạn)
     private String mediaHistory;
     private String symptoms;
     private String diagnosis;
@@ -23,53 +33,12 @@ public class MedicalRecord {
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+
+    @CreatedDate
     private LocalDateTime createdAt;
+
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @Enumerated(EnumType.STRING)
     private Status status;
-
-    // ---- METHODS ----
-    public void addDoctorNote(String note) {
-        this.doctorNote = (this.doctorNote == null ? "" : this.doctorNote + "\n") + note;
-    }
-
-    public void addTestResult(String result) {
-        this.testResults = (this.testResults == null ? "" : this.testResults + "\n") + result;
-    }
-
-    public void updateDiagnosis(String diag) {
-        this.diagnosis = diag;
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    public void updateTreatment(String treat) {
-        this.treatment = treat;
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    public void editRecord(String prescription, String conclusion) {
-        this.prescription = prescription;
-        this.conclusion = conclusion;
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    public void closeRecord() {
-        this.status = Status.CLOSED;
-        this.endTime = LocalDateTime.now();
-    }
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        status = Status.ACTIVE;
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
-
-    // Getters & Setters
-    // (Bạn có thể dùng Lombok để rút gọn)
 }

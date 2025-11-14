@@ -13,11 +13,11 @@ public class JwtAuthenticationFilter implements Filter {
             throws IOException, ServletException {
 
         HttpServletRequest req = (HttpServletRequest) request;
-        String token = req.getHeader("Authorization");
+        String authHeader = req.getHeader("Authorization");
 
-        // Giả lập kiểm tra token, thực tế sẽ xác minh JWT
-        if (token != null && token.startsWith("Bearer ")) {
-            // validate token...
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            // Thực hiện validate token nếu cần
         }
 
         chain.doFilter(request, response);

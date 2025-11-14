@@ -20,7 +20,7 @@ public class UserEventListener {
     private RoleRepository roleRepository;
 
     @RabbitListener(queues = RabbitMQConfig.QUEUE_NAME)
-    // @Transactional <-- XÓA DÒNG NÀY ĐỂ TRÁNH XUNG ĐỘT CONNECTION DB
+
     public void handleUserCreated(UserSyncDto syncDto) {
         System.out.println("AuthService: Đã nhận được tin nhắn đồng bộ user: " + syncDto.getEmail());
 
