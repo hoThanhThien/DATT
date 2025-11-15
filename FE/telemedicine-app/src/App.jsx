@@ -15,6 +15,7 @@ import ChatPage from './pages/public/ChatPage'
 // Patient Pages
 import PatientDashboardPage from './pages/patient/PatientDashboardPage'
 import MedicalRecordPage from './pages/patient/MedicalRecordPage'
+import MedicalRecordDetailPage from './pages/patient/MedicalRecordDetailPage'
 
 // Doctor Pages
 import DoctorDashboardPage from './pages/doctor/DoctorDashboardPage'
@@ -35,6 +36,7 @@ function App() {
                 <Route path="register" element={<RegisterPage />} />
                 {/* TODO: Change medical-records to require login - Move to PATIENT ROUTES when needed */}
                 <Route path="medical-records" element={<MedicalRecordPage />} />
+                <Route path="medical-records/:id" element={<MedicalRecordDetailPage />} />
                 <Route path="chat" element={<ChatPage />} />
                 {/* Thêm các trang public khác ở đây (doctors...) */}
             </Route>

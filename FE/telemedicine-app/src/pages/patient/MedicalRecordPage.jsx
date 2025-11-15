@@ -49,7 +49,7 @@ const MedicalRecordPage = () => {
   ]);
 
   const handleDetailClick = (recordId) => {
-    console.log('View details for record:', recordId);
+    navigate(`/medical-records/${recordId}`);
   };
 
   return (
