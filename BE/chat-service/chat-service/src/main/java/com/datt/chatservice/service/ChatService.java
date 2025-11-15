@@ -1,34 +1,34 @@
 package com.datt.chatservice.service;
 
-import com.datt.chatservice.model.Conversation;
-import com.datt.chatservice.model.Message;
-import com.datt.chatservice.repository.ChatRepository;
-import com.datt.chatservice.repository.MessageRepository;
+import com.datt.chatservice.model.ChatMessage;
+import com.datt.chatservice.repository.ChatMessageRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class ChatService {
 
-    private final ChatRepository conversationRepo;
-    private final MessageRepository messageRepo;
+    private final ChatMessageRepository messageRepo;
 
-    public ChatService(ChatRepository conversationRepo, MessageRepository messageRepo) {
-        this.conversationRepo = conversationRepo;
+    public ChatService(ChatMessageRepository messageRepo) {
         this.messageRepo = messageRepo;
     }
 
-    public Conversation createConversation(String appointmentId, String doctorId, String patientId) {
-        Conversation conversation = new Conversation(appointmentId, doctorId, patientId);
-        return conversationRepo.save(conversation);
+    // Placeholder: could create/chat room metadata if needed
+    public void createConversation(String appointmentId, String doctorId, String patientId) {
+        // For now, chat room is derived by client via chatRoomId, so nothing to persist here.
     }
 
-    public Message saveMessage(Message message) {
+    public ChatMessage saveMessage(ChatMessage message) {
+        if (message.getTimestamp() == null) {
+            message.setTimestamp(LocalDateTime.now());
+        }
         return messageRepo.save(message);
     }
 
-    public List<Message> getMessages(String conversationId) {
-        return messageRepo.findByConversationId(conversationId);
+    public List<ChatMessage> getMessages(String chatRoomId) {
+        return messageRepo.findByChatRoomId(chatRoomId);
     }
 }

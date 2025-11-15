@@ -136,7 +136,10 @@ services:
       - SPRING_DATASOURCE_PASSWORD=123456
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_RABBITMQ_HOST=rabbitmq
-      - spring.cloud.compatibility-verifier.enabled=false # <-- (ĐÃ THÊM)
+      - spring.cloud.compatibility-verifier.enabled=false
+      - paypal.client.id=AUoOKCbHbDZfDlWADDG-CF_CwG2_pCY9gUYECjAOlTgTABPpKvGqywLTTkqL3HO_ns56XU5sUIEOW4oI
+      - paypal.client.secret=ELDRUdh5YkyfQzeXSLPPFCdsEYzNltWbAkoTVnf38q_wdiNy-jg8EReSojE3ODMoxMjKTCD7L7rB2Pvx
+      - paypal.mode=sandbox
     depends_on:
       postgres-db:
         condition: service_healthy

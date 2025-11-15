@@ -36,23 +36,28 @@ public class GatewayConfig {
                         .uri("http://chat-service:8080")
                 )
 
-                // ----- CÁC ROUTE WEBSOCKET (BỊ THIẾU) -----
 
-                // ----- 1. THÊM ROUTE CHO CHAT (WEBSOCKET) -----
+
+
                 .route("chat_service_ws_route", r -> r
-                        // 1. NẾU đường dẫn là /ws/chat/... (Kết nối WebSocket)
+
                         .path("/ws/chat/**")
-                        // 2. THÌ chuyển tiếp đến service 'chat-service'
-                        // (Lưu ý: URI bắt đầu bằng "ws://", không phải "http://")
+
+
                         .uri("ws://chat-service:8080")
                 )
 
-                // ----- 2. THÊM ROUTE CHO VIDEO (WEBSOCKET) -----
+
                 .route("video_service_ws_route", r -> r
                         .path("/ws/video/**")
-                        .uri("ws://video-service:8080") // Trỏ đến container 'video-service'
+                        .uri("ws://video-service:8080")
+                )
+                .route("payment_service_route", r -> r
+                        .path("/api/v1/payments/**")
+                        .uri("http://payment-service:8080")
                 )
 
                 .build();
+
     }
 }

@@ -1,6 +1,6 @@
 package com.datt.chatservice.controller;
 
-import com.datt.chatservice.model.Message;
+import com.datt.chatservice.model.ChatMessage;
 import com.datt.chatservice.service.ChatService;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -27,15 +27,15 @@ public class ChatController {
     }
 
     // Lấy toàn bộ tin nhắn
-    @GetMapping("/messages/{conversationId}")
-    public List<Message> getMessages(@PathVariable String conversationId) {
-        return chatService.getMessages(conversationId);
+    @GetMapping("/messages/{chatRoomId}")
+    public List<ChatMessage> getMessages(@PathVariable String chatRoomId) {
+        return chatService.getMessages(chatRoomId);
     }
 
     // WebSocket gửi/nhận tin nhắn
     @MessageMapping("/sendMessage")
     @SendTo("/topic/public")
-    public Message sendMessage(Message message) {
+    public ChatMessage sendMessage(ChatMessage message) {
         return chatService.saveMessage(message);
     }
 }

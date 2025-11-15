@@ -23,7 +23,6 @@ public class Appointment {
 
     @Column(nullable = false)
     private Long doctorId;
-
     private String reason;
 
     @Column(nullable = false)
@@ -37,6 +36,8 @@ public class Appointment {
     @Column(nullable = false)
     private Status status;
 
+    @Column(name = "queue_number")
+    private String queueNumber;
     @CreationTimestamp // Chỉ dùng cho ngày tạo
     @Column(updatable = false)
     private LocalDateTime created;
