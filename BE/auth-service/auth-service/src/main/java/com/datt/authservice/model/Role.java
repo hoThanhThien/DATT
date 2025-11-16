@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "roles") // Sẽ tạo bảng 'roles' trong 'auth_db'
+@Table(name = "roles")
 @Getter
 @Setter
 public class Role {

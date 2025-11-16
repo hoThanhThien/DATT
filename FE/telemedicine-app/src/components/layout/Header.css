@@ -249,6 +249,11 @@ body {
   .menu-toggle { display: block; }
 }
 
+/* UserMenu trong nav */
+.main-nav ul li .user-menu-container {
+  margin-left: 8px;
+}
+
 @media (max-width: 600px) {
   .site-logo { height: 36px; }
   .top-inner {

@@ -1,4 +1,4 @@
-package com.datt.paymentservice.dto;
+package com.datt.paymentservice.dto; // (Bạn sẽ đổi tên package này)
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,12 +11,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentSuccessDto implements Serializable {
-
     private Long paymentId;
     private Long appointmentId;
     private Long patientId;
     private Long doctorId;
     private BigDecimal amount;
     private LocalDateTime appointmentTime;
-    private String appointmentType;
+    private String appointmentType; // "ONLINE"
 }

@@ -1,14 +1,15 @@
 import './Header.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import UserMenu from './UserMenu';
 import logo from '../../assets/logo/logo.png';
 
 const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-  // Replace with real auth logic
-  const isAuthenticated = false;
+  const { isAuthenticated } = useAuth();
 
   const handleDropdown = (idx) => {
     setDropdownOpen(dropdownOpen === idx ? null : idx);
@@ -17,8 +18,6 @@ const Header = () => {
   const handleAccountClick = () => {
     if (!isAuthenticated) {
       navigate('/login');
-    } else {
-      // Show account menu or profile
     }
   };
 
@@ -51,7 +50,7 @@ const Header = () => {
                   <ul className="dropdown-menu" style={{ display: dropdownOpen === 1 ? 'block' : 'none' }}>
                     <li><a href="#">Đặt lịch xét nghiệm</a></li>
                     <li><a href="#">Mua thuốc tại An Khang</a></li>
-                    {/* ...other items... */}
+                    
                   </ul>
                 </li>
                 <li className="nav-dropdown"
@@ -68,9 +67,15 @@ const Header = () => {
                   </ul>
                 </li>
                 <li><a href="/medical-records">Hồ sơ khám bệnh</a></li>
-                <li><a href="#">Đặt lịch</a></li>
+                <li><a href="/booking">Đặt lịch</a></li>
                 <li>
-                  <button className="btn-account-nav" onClick={handleAccountClick}>👤 Tài khoản</button>
+                  {isAuthenticated ? (
+                    <UserMenu />
+                  ) : (
+                    <button className="btn-account-nav" onClick={handleAccountClick}>
+                      👤 Tài khoản
+                    </button>
+                  )}
                 </li>
               </ul>
             </nav>

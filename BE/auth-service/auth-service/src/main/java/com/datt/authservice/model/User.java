@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class User {
 
-    @Id //  Không tự tăng
+    @Id
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -20,7 +20,7 @@ public class User {
     private String phoneNumber;
 
     @Column(nullable = false)
-    private String password; // Mật khẩu đã mã hóa
+    private String password;
 
     private String status;
 

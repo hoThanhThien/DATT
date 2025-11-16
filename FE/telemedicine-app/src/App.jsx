@@ -17,6 +17,13 @@ import PatientDashboardPage from './pages/patient/PatientDashboardPage'
 import MedicalRecordPage from './pages/patient/MedicalRecordPage'
 import MedicalRecordDetailPage from './pages/patient/MedicalRecordDetailPage'
 
+// Booking Pages
+import BookingPage from './pages/booking/BookingPage'
+import BookingSuccess from './pages/booking/BookingSuccess'
+import BookingDetail from './pages/booking/BookingDetail'
+import PaymentPage from './pages/payment/PaymentPage'
+import PaymentSuccess from './pages/payment/PaymentSuccess'
+
 // Doctor Pages
 import DoctorDashboardPage from './pages/doctor/DoctorDashboardPage'
 
@@ -38,6 +45,14 @@ function App() {
                 <Route path="medical-records" element={<MedicalRecordPage />} />
                 <Route path="medical-records/:id" element={<MedicalRecordDetailPage />} />
                 <Route path="chat" element={<ChatPage />} />
+                
+                {/* Booking Routes - Public Access */}
+                <Route path="booking" element={<BookingPage />} />
+                <Route path="booking-success" element={<BookingSuccess />} />
+                <Route path="booking/:id" element={<BookingDetail />} />
+                <Route path="payment" element={<PaymentPage />} />
+                <Route path="payment-success" element={<PaymentSuccess />} />
+                
                 {/* Thêm các trang public khác ở đây (doctors...) */}
             </Route>
 

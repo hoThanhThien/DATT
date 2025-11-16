@@ -11,13 +11,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    // Exchange mà service này sẽ GỬI tin nhắn đến
     @Bean
     TopicExchange paymentExchange() {
         return new TopicExchange("payment_exchange");
     }
 
-    // Cấu hình RabbitTemplate để gửi JSON (DTO)
+
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();

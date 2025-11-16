@@ -5,6 +5,4 @@ import com.datt.appointmentservice.model.Status;
 public class UpdateAppointmentRequest {
     private String reason;
     private Status status;
-
-    // Getters & Setters
 }

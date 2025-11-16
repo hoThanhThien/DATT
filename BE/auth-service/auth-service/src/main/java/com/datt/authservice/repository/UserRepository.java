@@ -7,7 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    // Hàm quan trọng nhất để tìm user khi đăng nhập
+
     Optional<User> findByEmail(String email);
-    // (Bạn có thể thêm findByPhoneNumber sau)
 }

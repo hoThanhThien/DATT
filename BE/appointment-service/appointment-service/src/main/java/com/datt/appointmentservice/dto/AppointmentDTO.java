@@ -13,7 +13,7 @@ public class AppointmentDTO {
     private LocalDateTime created;
     private LocalDateTime updated;
 
-    // Constructors
+
     public AppointmentDTO() {
     }
 

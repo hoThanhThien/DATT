@@ -23,19 +23,19 @@ const LoginPage = () => {
       if (result.success) {
         console.log('Login successful:', result.user);
         
-        // Chuyển hướng dựa trên role
-        const { role } = result.user;
-        if (role === 'admin') {
+        // Chuyển hướng dựa trên role (backend trả về uppercase)
+        const role = result.user?.role?.toUpperCase();
+        if (role === 'ADMIN') {
           navigate('/admin/dashboard');
-        } else if (role === 'doctor') {
+        } else if (role === 'DOCTOR') {
           navigate('/doctor/dashboard');
-        } else if (role === 'patient') {
+        } else if (role === 'PATIENT') {
           navigate('/patient/dashboard');
         } else {
           navigate('/');
         }
       } else {
-        setError(result.error);
+        setError(result.error || 'Đăng nhập thất bại');
       }
       
     } catch (err) {

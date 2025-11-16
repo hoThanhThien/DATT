@@ -25,45 +25,44 @@ import com.datt.authservice.repository.UserRepository;
 public class SecurityConfig {
 
     @Autowired
-    private UserRepository userRepository; // Dùng repo của auth-service
+    private UserRepository userRepository;
 
-    // 1. Bean Mã hóa (PHẢI GIỐNG HỆT user-service)
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // 2. Bean UserDetailsService (Dạy Spring cách tìm User trong auth_db)
+
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
             com.datt.authservice.model.User user = userRepository.findByEmail(username)
                     .orElseThrow(() -> new UsernameNotFoundException("Không tìm thấy User: " + username));
 
-            // ----- THÊM KIỂM TRA NÀY -----
+
             if (user.getRole() == null || user.getRole().getRoleName() == null) {
                 throw new UsernameNotFoundException("User " + username + " không có vai trò (role) hợp lệ.");
             }
-            // ---------------------------------
+
 
             String roleName = user.getRole().getRoleName().replace("ROLE_", "");
 
-            // Trả về đối tượng UserDetails của Spring
+
             return org.springframework.security.core.userdetails.User
                     .withUsername(user.getEmail())
-                    .password(user.getPassword()) // Mật khẩu đã mã hóa (lấy từ auth_db)
+                    .password(user.getPassword())
                     .roles(roleName)
                     .build();
         };
     }
 
-    // 3. Bean AuthenticationManager (Dùng để xác thực)
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
 
-    // 4. Bean SecurityFilterChain (Mở cửa cho API Login)
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -71,9 +70,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        // Mở cửa cho API Login (của auth-service)
                         .requestMatchers("/api/v1/auth/login").permitAll()
-                        .anyRequest().authenticated() // Khóa tất cả các API khác
+                        .anyRequest().authenticated()
                 );
         return http.build();
     }
@@ -81,7 +79,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Allow the FE dev server origin (Vite default port 5173)
+
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));

@@ -1,5 +1,11 @@
 package com.datt.userservice.service;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.datt.userservice.config.RabbitMQConfig;
 import com.datt.userservice.dto.DoctorRequest;
 import com.datt.userservice.dto.RegisterRequest;
@@ -12,12 +18,6 @@ import com.datt.userservice.repository.DoctorRepository;
 import com.datt.userservice.repository.PatientRepository;
 import com.datt.userservice.repository.RoleRepository;
 import com.datt.userservice.repository.UserRepository;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.Optional; // Cần import này
 
 @Service
 public class UserService {
@@ -155,5 +155,47 @@ public class UserService {
                 syncDto
         );
         System.out.println("UserService: Đã gửi tin nhắn đồng bộ user: " + user.getEmail());
+    }
+
+    // ------------------------------------------------------------------------
+    // 4. API LẤY THÔNG TIN USER HIỆN TẠI (GET CURRENT USER)
+    // ------------------------------------------------------------------------
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy user với email: " + email));
+    }
+
+    // ------------------------------------------------------------------------
+    // 5. API LẤY DANH SÁCH BÁC SĨ (GET ALL DOCTORS)
+    // ------------------------------------------------------------------------
+    public java.util.List<com.datt.userservice.dto.DoctorDTO> findAllDoctors() {
+        // Tìm role DOCTOR, nếu không có thì trả về list rỗng
+        java.util.Optional<Role> doctorRoleOpt = roleRepository.findByRoleName("ROLE_DOCTOR");
+        if (!doctorRoleOpt.isPresent()) {
+            return new java.util.ArrayList<>();
+        }
+        
+        Role doctorRole = doctorRoleOpt.get();
+        
+        // Lấy tất cả users có role DOCTOR và map sang DTO
+        return userRepository.findAll().stream()
+                .filter(user -> user.getRole() != null && user.getRole().equals(doctorRole))
+                .map(user -> {
+                    com.datt.userservice.dto.DoctorDTO dto = new com.datt.userservice.dto.DoctorDTO();
+                    dto.setId(user.getId());
+                    dto.setFullName(user.getFullName());
+                    dto.setEmail(user.getEmail());
+                    
+                    // Lấy thông tin từ Doctor entity
+                    if (user.getDoctor() != null) {
+                        dto.setSpecialization(user.getDoctor().getSpecialization());
+                        dto.setExperienceYears(user.getDoctor().getExperienceYears());
+                        dto.setWorkSchedule(user.getDoctor().getWorkSchedule());
+                        dto.setConsultationFee(user.getDoctor().getConsultationFee());
+                    }
+                    
+                    return dto;
+                })
+                .collect(java.util.stream.Collectors.toList());
     }
 }

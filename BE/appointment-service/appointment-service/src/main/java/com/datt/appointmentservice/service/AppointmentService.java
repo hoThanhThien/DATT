@@ -1,17 +1,18 @@
 package com.datt.appointmentservice.service;
 
-import com.datt.appointmentservice.model.Appointment;
-import com.datt.appointmentservice.model.AppointmentType; // 1. Thêm import
+import java.time.LocalDateTime;
+import java.util.List; // 1. Thêm import
+import java.util.Optional;
+
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired; // 2. Thêm import
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.datt.appointmentservice.model.Appointment; // 3. Thêm import
+import com.datt.appointmentservice.model.AppointmentType;
 import com.datt.appointmentservice.model.Status;
 import com.datt.appointmentservice.repository.AppointmentRepository;
-import org.springframework.amqp.rabbit.core.RabbitTemplate; // 2. Thêm import
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; // 3. Thêm import
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AppointmentService {
@@ -53,8 +54,17 @@ public class AppointmentService {
         } else {
             // ----- LOGIC ONLINE (TRỰC TUYẾN) -----
             appointment.setStatus(Status.PENDING); // Chờ thanh toán
-            // (Không gửi tin nhắn, vì chờ payment-service xác nhận)
-            return appointmentRepository.save(appointment);
+            Appointment savedAppointment = appointmentRepository.save(appointment);
+            
+            // Tạo chat room và video session ngay lập tức
+            // Frontend sẽ có thể truy cập ngay sau khi thanh toán
+            System.out.println("AppointmentService: Online appointment created with ID: " + savedAppointment.getId());
+            System.out.println("Chat room and video session should be created for appointment: " + savedAppointment.getId());
+            
+            // TODO: Gọi chat-service và video-service để tạo phòng
+            // hoặc frontend sẽ gọi trực tiếp sau khi thanh toán
+            
+            return savedAppointment;
         }
     }
 

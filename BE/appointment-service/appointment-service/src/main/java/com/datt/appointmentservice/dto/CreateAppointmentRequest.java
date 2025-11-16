@@ -8,5 +8,4 @@ public class CreateAppointmentRequest {
     private LocalDateTime appointmentTime;
     private AppointmentType type;
 
-    // Getters & Setters
 }

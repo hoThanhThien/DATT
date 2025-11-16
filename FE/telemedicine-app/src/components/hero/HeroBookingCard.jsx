@@ -1,7 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './HeroBookingCard.css';
 
 const HeroBookingCard = () => {
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Chuyển sang trang booking
+    navigate('/booking');
+  };
+
   return (
     <aside className="hero-booking-card">
       <div className="booking-top">
@@ -9,7 +18,7 @@ const HeroBookingCard = () => {
         <p className="muted">100+ bệnh viện · 1000+ phòng khám · Đặt trong 1 phút</p>
       </div>
 
-      <form className="booking-form" onSubmit={(e) => e.preventDefault()}>
+      <form className="booking-form" onSubmit={handleSubmit}>
         <label>
           Bệnh viện / Phòng khám
           <select defaultValue="">

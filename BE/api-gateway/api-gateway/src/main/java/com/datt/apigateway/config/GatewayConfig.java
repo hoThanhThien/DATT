@@ -12,7 +12,6 @@ public class GatewayConfig {
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
 
-                // ----- CÁC ROUTE HTTP (REST API) - Bạn đã có -----
                 .route("user_service_http_route", r -> r
                         .path("/api/v1/users/**")
                         .uri("http://user-service:8080")

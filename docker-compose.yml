@@ -89,12 +89,12 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=123456
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - SPRING_RABBITMQ_HOST=rabbitmq # <-- (ĐÃ THÊM)
-      - spring.cloud.compatibility-verifier.enabled=false # <-- (ĐÃ THÊM)
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - spring.cloud.compatibility-verifier.enabled=false
     depends_on:
       postgres-db:
         condition: service_healthy
-      rabbitmq: # <-- (ĐÃ THÊM)
+      rabbitmq:
         condition: service_healthy
     networks:
       - telemedicine-net
@@ -137,9 +137,10 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_RABBITMQ_HOST=rabbitmq
       - spring.cloud.compatibility-verifier.enabled=false
-      - paypal.client.id=AUoOKCbHbDZfDlWADDG-CF_CwG2_pCY9gUYECjAOlTgTABPpKvGqywLTTkqL3HO_ns56XU5sUIEOW4oI
-      - paypal.client.secret=ELDRUdh5YkyfQzeXSLPPFCdsEYzNltWbAkoTVnf38q_wdiNy-jg8EReSojE3ODMoxMjKTCD7L7rB2Pvx
-      - paypal.mode=sandbox
+      - PAYPAL_CLIENT_ID=AUoOKCbHbDZfDlWADDG-CF_CwG2_pCY9gUYECjAOlTgTABPpKvGqywLTTkqL3HO_ns56XU5sUIEOW4oI
+      - PAYPAL_CLIENT_SECRET=ELDRUdh5YkyfQzeXSLPPFCdsEYzNltWbAkoTVnf38q_wdiNy-jg8EReSojE3ODMoxMjKTCD7L7rB2Pvx
+      - PAYPAL_MODE=sandbox
+      - PAYMENT_CURRENCY_VND_TO_USD_RATE=25000
     depends_on:
       postgres-db:
         condition: service_healthy

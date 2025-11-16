@@ -17,7 +17,7 @@ public class JwtAuthenticationFilter implements Filter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
-            // Thực hiện validate token nếu cần
+
         }
 
         chain.doFilter(request, response);
